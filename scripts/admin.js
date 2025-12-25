@@ -42,9 +42,9 @@ form.addEventListener('submit', async (e) => {
           category,
           gender,
           description,
-          imageUrl,
+          images: imageUrl,
           quantity,
-          tagTxt,
+          tag: tagTxt,
           tagColor,
           featured
         }
@@ -55,6 +55,7 @@ form.addEventListener('submit', async (e) => {
     if (result.success) {
       showToast("Product added successfully!", "success");
       form.reset();
+      document.getElementById("imagePreview").classList.add = "hidden";
       fetchProducts();
     } else {
       showToast("Failed to save product to sheet.", "failure");
@@ -185,7 +186,7 @@ editForm.addEventListener("submit", async (e) => {
     tagColor: document.getElementById("edit-tag-color").value,
     description: document.getElementById("edit-description").value,
     images: imgURL,
-    featured: document.getElementById("edit-featured").checked
+    featured: document.getElementById("edit-featured").checked === true
   };
 
   // Call the update function
@@ -328,14 +329,14 @@ const table = new Tabulator("#productTable", {
         if (!target) return;
 
         const rowData = cell.getRow().getData();
-        const id = target.dataset.id;
+        const itemNo = rowData.itemNo;
 
         if (target.classList.contains("edit-btn")) {
           openEditModal(rowData);
         }
 
         if (target.classList.contains("delete-btn")) {
-          deleteProduct(id);
+          deleteProduct(itemNo);
         }
       }
     }
