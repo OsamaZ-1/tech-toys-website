@@ -55,7 +55,7 @@ form.addEventListener('submit', async (e) => {
     if (result.success) {
       showToast("Product added successfully!", "success");
       form.reset();
-      document.getElementById("imagePreview").classList.add = "hidden";
+      document.getElementById("imagePreview").classList.add("hidden");
       fetchProducts();
     } else {
       showToast("Failed to save product to sheet.", "failure");
@@ -147,6 +147,7 @@ function openEditModal(product){
     document.getElementById("edit-tag-text").value = product.tag;
     document.getElementById("edit-tag-color").value = product.tagColor;
     document.getElementById("edit-description").value = product.description;
+    document.getElementById("edit-imagePreview").src = product.images;
     document.getElementById("edit-featured").checked = product.featured === true;
 }
 
