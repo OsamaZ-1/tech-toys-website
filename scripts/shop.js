@@ -9,7 +9,7 @@ async function fetchProducts() {
     const formattedData = data.reverse().map(item => ({
       name: item.name,
       price: `$${item.price}`, // add $ sign
-      image: item.images,
+      images: item.images,
       category: item.category,
       age: item.age,
       tag: item.tag,
