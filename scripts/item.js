@@ -5,13 +5,13 @@ async function fetchProducts() {
     const params = new URLSearchParams(window.location.search);
     const itemNo = params.get("itemNo");
 
-    const response = await fetch(`${WEB_APP_URL}?action=getOne&itemNo=${encodeURIComponent(itemNo)}`);
+    const response = await fetch(`${WEB_APP_URL}?itemNo=${encodeURIComponent(itemNo)}`);
     const data = await response.json();
 
-    return data[0];
+    return data;
   } catch (err) {
     console.error("Failed to fetch products:", err);
-    return [];
+    return null;
   }
 }
 
