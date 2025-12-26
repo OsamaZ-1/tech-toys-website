@@ -57,23 +57,23 @@ async function renderProduct() {
 renderProduct();
 
 function minusQty(){
-    let qtyDisplay = document.getElementById("item-quantity").textContent;
+    let qtyDisplay = document.getElementById("item-quantity");
     let qty = Number(document.getElementById("item-quantity").textContent);
 
     if (qty - 1 < 0)
-        qtyDisplay = 0;
+        qtyDisplay.textContent = "" + 0;
     else
-        qtyDisplay = qty - 1;
+        qtyDisplay.textContent = "" + (qty - 1);
 }
 
 function plusQty(){
-    let qtyDisplay = document.getElementById("item-quantity").textContent;
+    let qtyDisplay = document.getElementById("item-quantity");
     let qty = Number(document.getElementById("item-quantity").textContent);
     
     if (qty + 1 > theItem.quantity)
-        qtyDisplay = theItem.quantity;
+        qtyDisplay.textContent = "" + theItem.quantity;
     else
-        qtyDisplay = qty + 1;
+        qtyDisplay.textContent = "" + (qty + 1);
 }
 
 function openWhatsApp() {
@@ -95,4 +95,22 @@ function toggleHeart() {
     const heartBtn = document.getElementById("heartBtn");
     heartBtn.classList.toggle("text-slate-400");
     heartBtn.classList.toggle("text-red-500");
+}
+
+function getTextColorForBg(hexColor) {
+  if (!hexColor) return "#111";
+
+  // Remove #
+  const hex = hexColor.replace("#", "");
+
+  // Convert to RGB
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  // Perceived brightness (WCAG)
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+  // Light bg → dark text, Dark bg → white text
+  return brightness > 155 ? "#111" : "#fff";
 }
