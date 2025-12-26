@@ -161,13 +161,15 @@ filterModal.addEventListener("click", e => {
 
 // Filtering Functionality
 document.getElementById("applyFilters").onclick = () => {
-  const maxPrice = Number(document.getElementById("filter-price").value);
+  const maxPrice = parseFloat(document.getElementById("filter-price").value);
   const age = document.getElementById("filter-age").value;
   const category = document.getElementById("filter-category").value;
   const gender = document.getElementById("filter-gender").value;
 
   displayedProducts = allProducts.filter(p => {
-    if (maxPrice && Number(p.price) > maxPrice) return false;
+    console.log(maxPrice, parseFloat(p.price));
+    console.log(gender, p.gender);
+    if (maxPrice && parseFloat(p.price) > maxPrice) return false;
     if (age && p.age !== age) return false;
     if (category && p.category !== category) return false;
     if (gender && p.gender !== gender) return false;
@@ -221,8 +223,9 @@ document.querySelectorAll(".sort-option").forEach(btn => {
     const type = btn.dataset.sort;
 
     displayedProducts.sort((a, b) => {
-      const priceA = Number(a.price);
-      const priceB = Number(b.price);
+      console.log(a.price, b.price);
+      const priceA = parseFloat(a.price);
+      const priceB = parseFloat(b.price);
 
       return type === "price-asc"
         ? priceA - priceB
