@@ -126,13 +126,15 @@ function loadMoreProducts() {
   if (nextProducts.length === 0) {
     // No more products → hide loader
     document.getElementById("infinite-loader").style.display = "none";
+    isLoading = false;
     return;
   }
 
-  renderProducts(nextProducts);
-  lastLoadedIndex += nextProducts.length;
-
-  isLoading = false;
+  setTimeout(() => {
+      renderProducts(nextProducts);
+      lastLoadedIndex += nextProducts.length;
+      isLoading = false;
+    }, 300); // 300ms delay to show loading
 }
 
 
@@ -140,6 +142,8 @@ function loadMoreProducts() {
 document.addEventListener("DOMContentLoaded", async () => {
   const loader = document.getElementById("infinite-loader");
   if (!loader) return;
+
+  await initProducts(); // first batch loads
 
   const observer = new IntersectionObserver(
     entries => {
@@ -157,11 +161,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   observer.observe(loader);
-
-  await initProducts(); // first batch loads
 });
-
-
 
 // ---------------------------------------------------------------------------------------------
 
