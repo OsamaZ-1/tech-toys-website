@@ -61,7 +61,7 @@ function renderProducts(products) {
           alt="${product.name}"
           loading="lazy"
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
-          onclick="window.location.href='/item.html?itemno=${product.itemNo}'"
+          onclick="window.location.href='/item.html?itemNo=${product.itemNo}'"
         />
 
         ${
@@ -99,7 +99,7 @@ function renderProducts(products) {
 
           <button
             class="flex items-center justify-center w-9 h-9 bg-primary hover:bg-primary-dark rounded-full text-white shadow-lg shadow-primary/30 transition-transform active:scale-90"
-            onclick="window.location.href='/item.html?itemno=${product.itemNo}'"
+            onclick="window.location.href='/item.html?itemNo=${product.itemNo}'"
           >
             <span class="material-symbols-outlined text-[20px]">add</span>
           </button>
