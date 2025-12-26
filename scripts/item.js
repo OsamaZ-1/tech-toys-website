@@ -36,7 +36,10 @@ async function renderProduct() {
         tagEl.textContent = "Sold Out!";
         tagEl.style.backgroundColor = "#fee2e2"; // red-100
         tagEl.style.color = "#991b1b"; // red-800
+
+        // disable order button
         document.getElementById("orderBtn").disabled = true;
+        document.getElementById("orderBtn").style.backgroundColor = "grey";
     }
 
     // Custom tag

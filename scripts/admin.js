@@ -371,91 +371,90 @@ function showToast(message, type = "success", duration = 3000) {
   }, duration);
 }
 
-// // Login Logic
-// // Add your allowed emails here
-// const ALLOWED_EMAILS = [
-//   "mohamad.ayash987@gmail.com",
-//   "zammarosama@gmail.com"
-// ];
+// Login Logic
+// Add your allowed emails here
+const ALLOWED_EMAILS = [
+  "zammarosama@gmail.com"
+];
 
-// // Wait for Identity to initialize
-// document.addEventListener("DOMContentLoaded", () => {
-//   if (window.netlifyIdentity) {
-//     window.netlifyIdentity.on("init", user => {
-//       if (user) checkAccess(user);
-//     });
+// Wait for Identity to initialize
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (user) checkAccess(user);
+    });
 
-//     window.netlifyIdentity.on("login", user => {
-//       checkAccess(user);
-//     });
+    window.netlifyIdentity.on("login", user => {
+      checkAccess(user);
+    });
 
-//     window.netlifyIdentity.on("logout", () => {
-//       showLogin();
-//     });
-//   }
-// });
+    window.netlifyIdentity.on("logout", () => {
+      showLogin();
+    });
+  }
+});
 
-// function checkAccess(user) {
-//   // Collect all possible email sources
-//   const possibleEmails = [
-//     user.email,
-//     user.user_metadata?.email,
-//     user.identities?.[0]?.email
-//   ].filter(Boolean);
+function checkAccess(user) {
+  // Collect all possible email sources
+  const possibleEmails = [
+    user.email,
+    user.user_metadata?.email,
+    user.identities?.[0]?.email
+  ].filter(Boolean);
 
-//   // console.log("Found user emails:", possibleEmails);
+  // console.log("Found user emails:", possibleEmails);
 
-//   // Is any email allowed?
-//   const isAllowed = possibleEmails.some(email =>
-//     ALLOWED_EMAILS.includes(email)
-//   );
+  // Is any email allowed?
+  const isAllowed = possibleEmails.some(email =>
+    ALLOWED_EMAILS.includes(email)
+  );
 
-//   if (isAllowed) {
-//     hideLogin();
-//     showAdminContent();
-//   } else {
-//     alert("You do not have permission to access this page.");
-//     netlifyIdentity.logout();
-//   }
-// }
+  if (isAllowed) {
+    hideLogin();
+    showAdminContent();
+  } else {
+    alert("You do not have permission to access this page.");
+    netlifyIdentity.logout();
+  }
+}
 
-// function showLogin() {
-//   document.getElementById("login-section").classList.remove("hidden");
-//   document.getElementById("admin-section").classList.add("hidden");
-// }
+function showLogin() {
+  document.getElementById("login-section").classList.remove("hidden");
+  document.getElementById("admin-section").classList.add("hidden");
+}
 
-// function hideLogin() {
-//   document.getElementById("login-section").classList.add("hidden");
-// }
+function hideLogin() {
+  document.getElementById("login-section").classList.add("hidden");
+}
 
-// function showAdminContent() {
-//   document.getElementById("admin-section").classList.remove("hidden");
-// }
+function showAdminContent() {
+  document.getElementById("admin-section").classList.remove("hidden");
+}
 
-// document.getElementById("login-btn").addEventListener("click", () => {
-//   if (window.netlifyIdentity) {
-//     try{
-//       // Always log out first to clear any previous session
-//       netlifyIdentity.logout().then(() => {
-//         netlifyIdentity.open("login");
-//       });
-//     }
-//     catch(e){
-//       netlifyIdentity.open("login");
-//     }
-//   }
-// });
+document.getElementById("login-btn").addEventListener("click", () => {
+  if (window.netlifyIdentity) {
+    try{
+      // Always log out first to clear any previous session
+      netlifyIdentity.logout().then(() => {
+        netlifyIdentity.open("login");
+      });
+    }
+    catch(e){
+      netlifyIdentity.open("login");
+    }
+  }
+});
 
-// // Auto logout on URL change / page unload
-// window.addEventListener("beforeunload", () => {
-//   if (window.netlifyIdentity) {
-//     netlifyIdentity.logout();
-//   }
-// });
+// Auto logout on URL change / page unload
+window.addEventListener("beforeunload", () => {
+  if (window.netlifyIdentity) {
+    netlifyIdentity.logout();
+  }
+});
 
-// // Optional: also handle SPA-like navigation (back/forward)
-// window.addEventListener("popstate", () => {
-//   if (window.netlifyIdentity) {
-//     netlifyIdentity.logout();
-//   }
-// });
+// Optional: also handle SPA-like navigation (back/forward)
+window.addEventListener("popstate", () => {
+  if (window.netlifyIdentity) {
+    netlifyIdentity.logout();
+  }
+});
