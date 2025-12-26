@@ -8,7 +8,7 @@ async function fetchProducts() {
     const response = await fetch(`${WEB_APP_URL}?action=getOne&itemNo=${encodeURIComponent(itemNo)}`);
     const data = await response.json();
 
-    return data;
+    return data[0];
   } catch (err) {
     console.error("Failed to fetch products:", err);
     return [];
@@ -57,13 +57,23 @@ async function renderProduct() {
 renderProduct();
 
 function minusQty(){
-    let qty = document.getElementById("item-quantity").textContent;
-    document.getElementById("item-quantity").textContent = "" + (Number(qty) - 1);
+    let qtyDisplay = document.getElementById("item-quantity").textContent;
+    let qty = Number(document.getElementById("item-quantity").textContent);
+
+    if (qty - 1 < 0)
+        qtyDisplay = 0;
+    else
+        qtyDisplay = qty - 1;
 }
 
 function plusQty(){
-    let qty = document.getElementById("item-quantity").textContent;
-    document.getElementById("item-quantity").textContent = "" + (Number(qty) + 1);
+    let qtyDisplay = document.getElementById("item-quantity").textContent;
+    let qty = Number(document.getElementById("item-quantity").textContent);
+    
+    if (qty + 1 > theItem.quantity)
+        qtyDisplay = theItem.quantity;
+    else
+        qtyDisplay = qty + 1;
 }
 
 function openWhatsApp() {
