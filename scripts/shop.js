@@ -33,11 +33,16 @@ let productsPerLoad = 10;
 let lastLoadedIndex = 0;
 
 async function initProducts() {
-    allProducts = await fetchProducts(); // fetch from API
-    displayedProducts = allProducts;     // initially show all
-    lastLoadedIndex = 0;
-    loadMoreProducts();                  // load first batch
+  allProducts = await fetchProducts();
+  displayedProducts = allProducts;
+  lastLoadedIndex = 0;
+
+  document.getElementById("product-grid").innerHTML = "";
+  document.getElementById("infinite-loader").style.display = "flex";
+
+  loadMoreProducts(); // first batch
 }
+
 
 // Function to render products
 function renderProducts(products) {
@@ -106,32 +111,43 @@ function renderProducts(products) {
   });
 }
 
+let isLoading = false;
 
 function loadMoreProducts() {
+  if (isLoading) return;
+
+  isLoading = true;
+
   const nextProducts = displayedProducts.slice(
     lastLoadedIndex,
     lastLoadedIndex + productsPerLoad
   );
 
   if (nextProducts.length === 0) {
+    // No more products → hide loader
     document.getElementById("infinite-loader").style.display = "none";
     return;
   }
 
   renderProducts(nextProducts);
   lastLoadedIndex += nextProducts.length;
+
+  isLoading = false;
 }
 
+
 // Infinite Loader Fuction
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const loader = document.getElementById("infinite-loader");
   if (!loader) return;
 
   const observer = new IntersectionObserver(
     entries => {
-      if (entries[0].isIntersecting) {
-        loadMoreProducts();
-      }
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          loadMoreProducts();
+        }
+      });
     },
     {
       root: null,
@@ -142,8 +158,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(loader);
 
-  initProducts();
+  await initProducts(); // first batch loads
 });
+
 
 
 // ---------------------------------------------------------------------------------------------
