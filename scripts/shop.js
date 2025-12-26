@@ -60,12 +60,15 @@ function renderProducts(products) {
         ${
           product.tag
             ? `
-          <div
-            class="absolute top-2 left-2 px-2 py-1 rounded-lg backdrop-blur-sm text-xs font-bold uppercase tracking-wider"
-            style="background:${product.tagColor || '#ffffffcc'}; color:#111;"
-          >
-            ${product.tag}
-          </div>`
+            <div
+              class="absolute top-2 left-2 px-2 py-1 rounded-lg backdrop-blur-sm text-xs font-bold uppercase tracking-wider"
+              style="
+                background: ${product.tagColor || "#ffffffcc"};
+                color: ${getTextColorForBg(product.tagColor)};
+              "
+            >
+              ${product.tag}
+            </div>`
             : ""
         }
       </div>
@@ -139,38 +142,101 @@ observer.observe(loader);
 
 // ---------------------------------------------------------------------------------------------
 
-// Filter Categories function
-function filterCategories(category, event) {
-    // Reset load state
-    lastLoadedIndex = 0;
+// Filter Categories Modal
+const filterModal = document.getElementById("filterModal");
+document.getElementById("openFilters").onclick = () => {
+  filterModal.classList.remove("hidden");
+};
 
-    // Filter products
-    if (category === "All") {
-        displayedProducts = allProducts;
-    } else {
-        displayedProducts = allProducts.filter(p => p.category === category);
-    }
+document.getElementById("closeFilters").onclick = () => {
+  filterModal.classList.add("hidden");
+};
 
-    // Clear grid
-    const grid = document.getElementById("product-grid");
-    grid.innerHTML = "";
+// Close when clicking overlay
+filterModal.addEventListener("click", e => {
+  if (e.target === filterModal) {
+    filterModal.classList.add("hidden");
+  }
+});
 
-    // Load first batch of filtered products
-    loadMoreProducts();
+// Filtering Functionality
+document.getElementById("applyFilters").onclick = () => {
+  const maxPrice = Number(document.getElementById("filter-price").value);
+  const age = document.getElementById("filter-age").value;
+  const category = document.getElementById("filter-category").value;
+  const gender = document.getElementById("filter-gender").value;
 
-    // Update button styles
-    const buttons = document.querySelectorAll("#shop-section .flex.cursor-pointer");
-    buttons.forEach(btn => {
-        btn.classList.remove("bg-secondary/20", "text-secondary-darker");
-        btn.classList.add("bg-subtle-light", "dark:bg-subtle-dark");
+  displayedProducts = allProducts.filter(p => {
+    if (maxPrice && Number(p.price) > maxPrice) return false;
+    if (age && p.age !== age) return false;
+    if (category && p.category !== category) return false;
+    if (gender && p.gender !== gender) return false;
+    return true;
+  });
+
+  // Reset and reload
+  document.getElementById("product-grid").innerHTML = "";
+  lastLoadedIndex = 0;
+  loadMoreProducts();
+
+  filterModal.classList.add("hidden");
+};
+
+// Clear Filters
+document.getElementById("clearFilters").onclick = () => {
+  document.getElementById("filter-price").value = "";
+  document.getElementById("filter-age").value = "";
+  document.getElementById("filter-category").value = "";
+  document.getElementById("filter-gender").value = "";
+
+  displayedProducts = allProducts;
+  document.getElementById("product-grid").innerHTML = "";
+  lastLoadedIndex = 0;
+  loadMoreProducts();
+
+  filterModal.classList.add("hidden");
+};
+
+// Open Sort Modal
+const sortModal = document.getElementById("sortModal");
+
+document.getElementById("openSort").onclick = () => {
+  sortModal.classList.remove("hidden");
+};
+
+document.getElementById("closeSort").onclick = () => {
+  sortModal.classList.add("hidden");
+};
+
+// Close on overlay click
+sortModal.addEventListener("click", e => {
+  if (e.target === sortModal) {
+    sortModal.classList.add("hidden");
+  }
+});
+
+// Sorting Functionality
+document.querySelectorAll(".sort-option").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const type = btn.dataset.sort;
+
+    displayedProducts.sort((a, b) => {
+      const priceA = Number(a.price);
+      const priceB = Number(b.price);
+
+      return type === "price-asc"
+        ? priceA - priceB
+        : priceB - priceA;
     });
 
-    // Highlight the clicked button
-    const clickedBtn = event.currentTarget;
-    clickedBtn.classList.remove("bg-subtle-light", "dark:bg-subtle-dark");
-    clickedBtn.classList.add("bg-secondary/20", "text-secondary-darker");
-}
+    // Reset grid + infinite scroll index
+    document.getElementById("product-grid").innerHTML = "";
+    lastLoadedIndex = 0;
+    loadMoreProducts();
 
+    sortModal.classList.add("hidden");
+  });
+});
 
 function openWhatsApp(message = "") {
   const phoneNumber = "96181006103"; // WhatsApp number (no spaces or symbols)
@@ -196,6 +262,25 @@ function scrollToElement(id, offset = 0) {
     });
   }
 }
+
+function getTextColorForBg(hexColor) {
+  if (!hexColor) return "#111";
+
+  // Remove #
+  const hex = hexColor.replace("#", "");
+
+  // Convert to RGB
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  // Perceived brightness (WCAG)
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+  // Light bg → dark text, Dark bg → white text
+  return brightness > 155 ? "#111" : "#fff";
+}
+
 
 // Open Larger item image
 // function openImageModal(imgSrc) {
