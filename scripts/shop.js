@@ -8,10 +8,11 @@ async function fetchProducts() {
     // Map the API fields to the format used in our grid
     const formattedData = data.reverse().map(item => ({
       name: item.name,
-      price: `$${item.price}`, // add $ sign
+      price: item.price, // add $ sign
       images: item.images,
       category: item.category,
       age: item.age,
+      gender: item.gender,
       tag: item.tag,
       tagColor: item.tagColor
     }));
@@ -87,7 +88,7 @@ function renderProducts(products) {
 
         <div class="mt-auto flex items-center justify-between">
           <span class="text-slate-900 dark:text-white font-extrabold text-lg">
-            ${product.price}
+            $${product.price}
           </span>
 
           <button
@@ -167,8 +168,6 @@ document.getElementById("applyFilters").onclick = () => {
   const gender = document.getElementById("filter-gender").value;
 
   displayedProducts = allProducts.filter(p => {
-    console.log(maxPrice, parseFloat(p.price));
-    console.log(gender, p.gender);
     if (maxPrice && parseFloat(p.price) > maxPrice) return false;
     if (age && p.age !== age) return false;
     if (category && p.category !== category) return false;
@@ -223,7 +222,6 @@ document.querySelectorAll(".sort-option").forEach(btn => {
     const type = btn.dataset.sort;
 
     displayedProducts.sort((a, b) => {
-      console.log(a.price, b.price);
       const priceA = parseFloat(a.price);
       const priceB = parseFloat(b.price);
 
