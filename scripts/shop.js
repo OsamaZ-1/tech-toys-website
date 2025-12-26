@@ -7,6 +7,7 @@ async function fetchProducts() {
 
     // Map the API fields to the format used in our grid
     const formattedData = data.reverse().map(item => ({
+      itemNo: item.itemNo,
       name: item.name,
       price: item.price, // add $ sign
       images: item.images,
@@ -55,7 +56,7 @@ function renderProducts(products) {
           alt="${product.name}"
           loading="lazy"
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
-          onclick="openImageModal?.(this.src)"
+          onclick="window.location.href='/item.html?itemno=${product.itemNo}'"
         />
 
         ${
@@ -93,7 +94,7 @@ function renderProducts(products) {
 
           <button
             class="flex items-center justify-center w-9 h-9 bg-primary hover:bg-primary-dark rounded-full text-white shadow-lg shadow-primary/30 transition-transform active:scale-90"
-            onclick="openWhatsApp('Hi TechToys! I want this toy: ${product.name}')"
+            onclick="window.location.href='/item.html?itemno=${product.itemNo}'"
           >
             <span class="material-symbols-outlined text-[20px]">add</span>
           </button>
@@ -121,25 +122,29 @@ function loadMoreProducts() {
   lastLoadedIndex += nextProducts.length;
 }
 
-// Initiate
-initProducts();
+// Infinite Loader Fuction
+document.addEventListener("DOMContentLoaded", () => {
+  const loader = document.getElementById("infinite-loader");
+  if (!loader) return;
 
-const loader = document.getElementById("infinite-loader");
-
-const observer = new IntersectionObserver(
-  entries => {
-    if (entries[0].isIntersecting) {
-      loadMoreProducts();
+  const observer = new IntersectionObserver(
+    entries => {
+      if (entries[0].isIntersecting) {
+        loadMoreProducts();
+      }
+    },
+    {
+      root: null,
+      rootMargin: "200px",
+      threshold: 0
     }
-  },
-  {
-    root: null,
-    rootMargin: "200px",
-    threshold: 0
-  }
-);
+  );
 
-observer.observe(loader);
+  observer.observe(loader);
+
+  initProducts();
+});
+
 
 // ---------------------------------------------------------------------------------------------
 
@@ -281,53 +286,3 @@ function getTextColorForBg(hexColor) {
   // Light bg → dark text, Dark bg → white text
   return brightness > 155 ? "#111" : "#fff";
 }
-
-
-// Open Larger item image
-// function openImageModal(imgSrc) {
-//   const modal = document.getElementById("imageModal");
-//   const modalImg = document.getElementById("modalImage");
-
-//   modalImg.src = imgSrc;
-//   modal.classList.remove("hidden");
-//   modal.classList.add("flex");
-// }
-
-// function closeImageModal() {
-//   const modal = document.getElementById("imageModal");
-//   modal.classList.add("hidden");
-//   modal.classList.remove("flex");
-// }
-
-
-// // Scroll Filter Buttons with mouse
-// const slider = document.getElementById("chips-scroll");
-// let isDown = false;
-// let startX;
-// let scrollLeft;
-
-// slider.addEventListener("mousedown", (e) => {
-//   isDown = true;
-//   slider.classList.add("cursor-grabbing");
-//   startX = e.pageX - slider.offsetLeft;
-//   scrollLeft = slider.scrollLeft;
-// });
-
-// slider.addEventListener("mouseleave", () => {
-//   isDown = false;
-//   slider.classList.remove("cursor-grabbing");
-//   document.body.style.userSelect = ""; // ✅ restore
-// });
-
-// slider.addEventListener("mouseup", () => {
-//   isDown = false;
-//   slider.classList.remove("cursor-grabbing");
-//   document.body.style.userSelect = ""; // ✅ restore
-// });
-
-// slider.addEventListener("mousemove", (e) => {
-//   if (!isDown) return;
-//   const x = e.pageX - slider.offsetLeft;
-//   const walk = (x - startX) * 2; // drag speed
-//   slider.scrollLeft = scrollLeft - walk;
-// });

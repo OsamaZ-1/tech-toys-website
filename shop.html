@@ -136,61 +136,16 @@
         id="product-grid"
         class="grid grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-x-6 lg:gap-y-4"
       >
-        <!-- Card 1 -->
-        <div
-          class="group bg-card-light dark:bg-card-dark rounded-2xl p-3 shadow-card hover:shadow-soft transition-all duration-300 flex flex-col h-full"
-        >
-          <div
-            class="relative w-full aspect-square rounded-lg overflow-hidden mb-3 bg-gray-100 dark:bg-gray-800"
-          >
-            <img
-              alt="Colorful wooden toy rocket on a plain background"
-              class="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeDfGK6dak5XWYLDeHqCD7ZjYfH4AYndp0rCT7r5jGEBhphbhQQ-TyUxPX8wgBBCsMSxSS3Wl2GjUt91_2uy4AKCCrRHweHZIuQx9jS0lqfJHrq5LN7JaGCQmMKom97pJHm8MOmGg1-rZVMJyZgBK3MXz_qGn_BXuTmXX_kggF6FkNUxVVx5MBrxjoPSFI-_uBMynysNedsL4qLA9qaWC53Z6E7dtk5dBGnpMehH2ytRyWyq0UJtgqnd0c8wlxeiyM-KKGfLve8bg"
-            />
-            <div
-              class="absolute top-2 left-2 bg-white/90 dark:bg-black/60 backdrop-blur-sm px-2 py-1 rounded-lg"
-            >
-              <span
-                class="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider"
-                >Tag!</span
-              >
-            </div>
-            <!--<button
-              class="absolute top-2 right-2 p-1.5 bg-white/50 hover:bg-white rounded-full backdrop-blur-sm transition-colors text-slate-400 hover:text-red-500 dark:text-slate-200"
-            >
-              <span class="material-symbols-outlined text-[20px]"
-                >favorite</span
-              >
-            </button>-->
-          </div>
-          <div class="flex flex-col flex-grow">
-            <h3
-              class="text-slate-900 dark:text-white font-medium text-base leading-tight mb-1 line-clamp-2"
-            >
-              Space Explorer Rocket
-            </h3>
-            <div class="flex items-center gap-1 mb-2">
-              <span class="text-black-400 text-[11px] fill-1">Age:</span>
-              <span
-                class="text-xs text-slate-500 dark:text-slate-400 font-medium"
-                >3-5 Years</span
-              >
-            </div>
-            <div class="mt-auto flex items-center justify-between">
-              <span
-                class="text-slate-900 dark:text-white font-extrabold text-lg"
-                >$24.99</span
-              >
-              <button
-                class="flex items-center justify-center w-9 h-9 bg-primary hover:bg-primary-dark rounded-full text-white shadow-lg shadow-primary/30 transition-transform active:scale-90"
-              >
-                <span class="material-symbols-outlined text-[20px]">add</span>
-              </button>
-            </div>
-          </div>
-        </div>
+        <!-- Product Cards are placed here -->
       </div>
+
+      <!-- Infinite Scroll Loader -->
+      <div id="infinite-loader" class="flex justify-center py-8">
+        <div
+          class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
+        ></div>
+      </div>
+
       <!-- Filter Modal Overlay -->
       <div
         id="filterModal"
@@ -342,14 +297,8 @@
           </div>
         </div>
       </div>
-
-      <!-- Infinite Scroll Loader -->
-      <div id="infinite-loader" class="flex justify-center py-8">
-        <div
-          class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
-        ></div>
-      </div>
     </main>
+
     <!-- Bottom Navigation Bar -->
     <nav
       class="fixed bottom-0 w-full bg-white dark:bg-background-dark border-t border-slate-100 dark:border-slate-800 pb-safe z-40"
