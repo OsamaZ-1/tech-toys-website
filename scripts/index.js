@@ -53,7 +53,7 @@ async function fetchProducts() {
 
     // Map the API fields to the format used in our grid
     const formattedData = data
-        .filter(item => item.featured === "true")
+        .filter(item => item.featured === "TRUE")
         .reverse()
         .map(item => ({
             itemNo: item.itemNo,
