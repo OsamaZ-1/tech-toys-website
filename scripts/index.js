@@ -126,7 +126,7 @@ function enableHorizontalDragScroll(containerId) {
   let isDown = false;
   let startX;
   let scrollLeft;
-  let isDragging = false; // track if movement happened
+  let isDragging = false;
 
   container.style.cursor = "grab";
   container.style.overflowX = "auto";
@@ -148,23 +148,24 @@ function enableHorizontalDragScroll(containerId) {
   container.addEventListener("mouseup", () => {
     isDown = false;
     container.style.cursor = "grab";
+    setTimeout(() => isDragging = false, 0); // reset after click event
   });
 
   container.addEventListener("mousemove", (e) => {
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - container.offsetLeft;
-    const walk = (x - startX) * 1; // scroll speed
-    if (Math.abs(walk) > 2) isDragging = true; // mark as drag if moved enough
+    const walk = (x - startX);
+    if (Math.abs(walk) > 2) isDragging = true;
     container.scrollLeft = scrollLeft - walk;
   });
 
   container.addEventListener("click", (e) => {
     if (isDragging) {
-      e.preventDefault();  // prevent click after drag
-      e.stopImmediatePropagation();
+      e.stopPropagation();
+      e.preventDefault();
     }
-  });
+  }, true); // useCapture=true so it triggers before child clicks
 
   // Touch support
   container.addEventListener("touchstart", (e) => {
@@ -177,13 +178,14 @@ function enableHorizontalDragScroll(containerId) {
   container.addEventListener("touchmove", (e) => {
     if (!isDown) return;
     const x = e.touches[0].pageX - container.offsetLeft;
-    const walk = (x - startX) * 1;
+    const walk = (x - startX);
     if (Math.abs(walk) > 2) isDragging = true;
     container.scrollLeft = scrollLeft - walk;
   });
 
   container.addEventListener("touchend", () => {
     isDown = false;
+    setTimeout(() => isDragging = false, 0);
   });
 }
 
