@@ -182,8 +182,7 @@ filterModal.addEventListener("click", e => {
   }
 });
 
-// Filtering Functionality
-document.getElementById("applyFilters").onclick = () => {
+function applyFilters() {
   const maxPrice = parseFloat(document.getElementById("filter-price").value);
   const age = document.getElementById("filter-age").value;
   const category = document.getElementById("filter-category").value;
@@ -203,7 +202,7 @@ document.getElementById("applyFilters").onclick = () => {
   loadMoreProducts();
 
   filterModal.classList.add("hidden");
-};
+}
 
 // Clear Filters
 document.getElementById("clearFilters").onclick = () => {
@@ -303,3 +302,29 @@ function getTextColorForBg(hexColor) {
   // Light bg → dark text, Dark bg → white text
   return brightness > 155 ? "#111" : "#fff";
 }
+
+// Call this on page load
+function applyFiltersFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+
+  // Example filters
+  const age = params.get("age");
+  const category = params.get("category");
+
+  // Set inputs if they exist
+  if (age) {
+    const ageInput = document.getElementById("filter-age");
+    if (ageInput) ageInput.value = age;
+  }
+
+  if (category) {
+    const categoryInput = document.getElementById("filter-category");
+    if (categoryInput) categoryInput.value = category;
+  }
+
+  // Apply the filtering logic
+  applyFilters();
+}
+
+// Run on page load
+document.addEventListener("DOMContentLoaded", applyFiltersFromQuery);

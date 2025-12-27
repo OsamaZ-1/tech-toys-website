@@ -40,6 +40,7 @@ async function renderProduct() {
         // disable order button
         document.getElementById("orderBtn").disabled = true;
         document.getElementById("orderBtn").style.backgroundColor = "grey";
+        document.getElementById("item-quantity").textContent = "0";
     }
 
     // Custom tag
