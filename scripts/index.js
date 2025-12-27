@@ -126,13 +126,15 @@ function enableHorizontalDragScroll(containerId) {
   let isDown = false;
   let startX;
   let scrollLeft;
+  let isDragging = false; // track if movement happened
 
   container.style.cursor = "grab";
-  container.style.overflowX = "auto"; // ensure horizontal scroll
-  container.style.userSelect = "none"; // prevent text selection
+  container.style.overflowX = "auto";
+  container.style.userSelect = "none";
 
   container.addEventListener("mousedown", (e) => {
     isDown = true;
+    isDragging = false;
     container.style.cursor = "grabbing";
     startX = e.pageX - container.offsetLeft;
     scrollLeft = container.scrollLeft;
@@ -152,13 +154,22 @@ function enableHorizontalDragScroll(containerId) {
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - container.offsetLeft;
-    const walk = (x - startX) * 1; // scroll-fast factor
+    const walk = (x - startX) * 1; // scroll speed
+    if (Math.abs(walk) > 2) isDragging = true; // mark as drag if moved enough
     container.scrollLeft = scrollLeft - walk;
   });
 
-  // Optional: support touch devices
+  container.addEventListener("click", (e) => {
+    if (isDragging) {
+      e.preventDefault();  // prevent click after drag
+      e.stopImmediatePropagation();
+    }
+  });
+
+  // Touch support
   container.addEventListener("touchstart", (e) => {
     isDown = true;
+    isDragging = false;
     startX = e.touches[0].pageX - container.offsetLeft;
     scrollLeft = container.scrollLeft;
   });
@@ -167,6 +178,7 @@ function enableHorizontalDragScroll(containerId) {
     if (!isDown) return;
     const x = e.touches[0].pageX - container.offsetLeft;
     const walk = (x - startX) * 1;
+    if (Math.abs(walk) > 2) isDragging = true;
     container.scrollLeft = scrollLeft - walk;
   });
 
