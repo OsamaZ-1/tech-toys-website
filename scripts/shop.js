@@ -40,6 +40,8 @@ async function initProducts() {
   document.getElementById("product-grid").innerHTML = "";
   document.getElementById("infinite-loader").style.display = "flex";
 
+  applyFiltersFromQuery();
+
   loadMoreProducts(); // first batch
 }
 
@@ -144,7 +146,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!loader) return;
 
   await initProducts(); // first batch loads
-  applyFiltersFromQuery();
 
   const observer = new IntersectionObserver(
     entries => {
