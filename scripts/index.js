@@ -118,3 +118,62 @@ async function renderFeaturedProds() {
 }
 
 renderFeaturedProds();
+
+function enableHorizontalDragScroll(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  container.style.cursor = "grab";
+  container.style.overflowX = "auto"; // ensure horizontal scroll
+  container.style.userSelect = "none"; // prevent text selection
+
+  container.addEventListener("mousedown", (e) => {
+    isDown = true;
+    container.style.cursor = "grabbing";
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  });
+
+  container.addEventListener("mouseleave", () => {
+    isDown = false;
+    container.style.cursor = "grab";
+  });
+
+  container.addEventListener("mouseup", () => {
+    isDown = false;
+    container.style.cursor = "grab";
+  });
+
+  container.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1; // scroll-fast factor
+    container.scrollLeft = scrollLeft - walk;
+  });
+
+  // Optional: support touch devices
+  container.addEventListener("touchstart", (e) => {
+    isDown = true;
+    startX = e.touches[0].pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  });
+
+  container.addEventListener("touchmove", (e) => {
+    if (!isDown) return;
+    const x = e.touches[0].pageX - container.offsetLeft;
+    const walk = (x - startX) * 1;
+    container.scrollLeft = scrollLeft - walk;
+  });
+
+  container.addEventListener("touchend", () => {
+    isDown = false;
+  });
+}
+
+enableHorizontalDragScroll("header-buttons");
+enableHorizontalDragScroll("featured-cards");
