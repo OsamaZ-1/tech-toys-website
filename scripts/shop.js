@@ -15,7 +15,8 @@ async function fetchProducts() {
       age: item.age,
       gender: item.gender,
       tag: item.tag,
-      tagColor: item.tagColor
+      tagColor: item.tagColor,
+      qty: item.quantity
     }));
 
     return formattedData;
@@ -67,19 +68,32 @@ function renderProducts(products) {
         />
 
         ${
-          product.tag
+          product.quantity === 0
             ? `
-            <div
-              class="absolute top-2 left-2 px-2 py-1 rounded-lg backdrop-blur-sm text-xs font-bold uppercase tracking-wider"
-              style="
-                background: ${product.tagColor || "#ffffffcc"};
-                color: ${getTextColorForBg(product.tagColor)};
-              "
-            >
-              ${product.tag}
-            </div>`
-            : ""
+              <div
+                class="absolute top-2 left-2 px-2 py-1 rounded-lg backdrop-blur-sm text-xs font-bold uppercase tracking-wider bg-red-500 text-white"
+              >
+                Sold Out!
+              </div>`
+            : product.tag
+              ? `
+                <div
+                  class="absolute top-2 left-2 px-2 py-1 rounded-lg backdrop-blur-sm text-xs font-bold uppercase tracking-wider"
+                  style="
+                    background: ${product.tagColor || "#ffffffcc"};
+                    color: ${getTextColorForBg(product.tagColor)};
+                  "
+                >
+                  ${product.tag}
+                </div>`
+              : `
+                <div
+                  class="hidden absolute top-2 left-2 px-2 py-1 rounded-lg backdrop-blur-sm text-xs font-bold uppercase tracking-wider bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
+                >
+                  In Stock
+                </div>`
         }
+
       </div>
 
       <div class="flex flex-col flex-grow">
