@@ -144,6 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!loader) return;
 
   await initProducts(); // first batch loads
+  applyFiltersFromQuery();
 
   const observer = new IntersectionObserver(
     entries => {
@@ -325,6 +326,3 @@ function applyFiltersFromQuery() {
   // Apply the filtering logic
   applyFilters();
 }
-
-// Run on page load
-document.addEventListener("DOMContentLoaded", applyFiltersFromQuery);
