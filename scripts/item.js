@@ -23,7 +23,7 @@ async function renderProduct() {
     document.getElementById("item-img").style.backgroundImage = `url('${item.images}')`;
     document.getElementById("item-name").textContent = item.name;
     document.getElementById("item-price").textContent = `$${item.price}`;
-    document.getElementById("item-price-before").textContent = `$${item.priceBefore}`;
+    document.getElementById("item-price-before").textContent = item.priceBefore !== "" ? `$${item.priceBefore}` : "";
     document.getElementById("item-age").textContent = item.age;
     document.getElementById("item-category").textContent = item.category;
     document.getElementById("item-gender").textContent = item.gender;
