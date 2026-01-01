@@ -33,7 +33,7 @@ async function renderProduct() {
     const tagEl = document.getElementById("item-tag");
     // SOLD OUT takes priority
     if (Number(item.quantity) === 0) {
-        tagEl.textContent = "Sold Out!";
+        tagEl.textContent = "نفذت الكمية";
         tagEl.style.backgroundColor = "#fee2e2"; // red-100
         tagEl.style.color = "#991b1b"; // red-800
 
@@ -52,7 +52,7 @@ async function renderProduct() {
 
     // Default: In stock
     else{
-        tagEl.textContent = "In stock";
+        tagEl.textContent = "موجود";
         tagEl.style.backgroundColor = "#dcfce7"; // green-100
         tagEl.style.color = "#166534"; // green-800
     }

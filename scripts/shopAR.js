@@ -64,7 +64,7 @@ function renderProducts(products) {
           alt="${product.name}"
           loading="lazy"
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
-          onclick="window.location.href='./item.html?itemNo=${product.itemNo}'"
+          onclick="window.location.href='/ar/item.html?itemNo=${product.itemNo}'"
           onerror="
             if(!this.retries) this.retries = 7;
             if(this.retries-- > 0){
@@ -96,7 +96,7 @@ function renderProducts(products) {
                 <div
                   class="hidden absolute top-2 left-2 px-2 py-1 rounded-lg backdrop-blur-sm text-xs font-bold uppercase tracking-wider bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400"
                 >
-                  In Stock
+                  موجود
                 </div>`
         }
 
@@ -121,7 +121,7 @@ function renderProducts(products) {
 
           <button
             class="flex items-center justify-center w-9 h-9 bg-primary hover:bg-primary-dark rounded-full text-white shadow-lg shadow-primary/30 transition-transform active:scale-90"
-            onclick="window.location.href='/item.html?itemNo=${product.itemNo}'"
+            onclick="window.location.href='/ar/item.html?itemNo=${product.itemNo}'"
           >
             <span class="material-symbols-outlined text-[20px]">add</span>
           </button>

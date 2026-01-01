@@ -80,7 +80,7 @@ async function renderFeaturedProds() {
         const card = document.createElement("div");
         card.className = "flex-none w-[180px] snap-start group cursor-pointer";
         card.onclick = () => {
-            window.location.href = `/item.html?itemNo=${encodeURIComponent(item.itemNo)}`;
+            window.location.href = `/ar/item.html?itemNo=${encodeURIComponent(item.itemNo)}`;
         };
 
         card.innerHTML = `
