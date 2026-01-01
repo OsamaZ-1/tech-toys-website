@@ -8,13 +8,13 @@ async function fetchProducts() {
     // Map the API fields to the format used in our grid
     const formattedData = data.reverse().map(item => ({
       itemNo: item.itemNo,
-      name: item.name,
+      name: item.nameAR,
       price: item.price, // add $ sign
       images: item.images,
-      category: item.category,
-      age: item.age,
-      gender: item.gender,
-      tag: item.tag,
+      category: item.categoryAR,
+      age: item.ageAR,
+      gender: item.genderAR,
+      tag: item.tagAR,
       tagColor: item.tagColor,
       qty: item.quantity
     }));

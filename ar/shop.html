@@ -102,9 +102,9 @@
             <!-- Language switcher -->
             <button
               class="px-2 py-1 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary dark:hover:text-primary transition-colors"
-              onclick="window.location.href='./ar/shop.html'"
+              onclick="window.location.href='../shop.html'"
             >
-              AR
+              EN
             </button>
 
             <!-- Home button -->
@@ -128,7 +128,7 @@
           class="flex items-center gap-2 bg-primary text-slate-900 rounded-full px-5 py-2.5 shadow-md shadow-primary/30 active:scale-95 transition-all"
         >
           <span class="material-symbols-outlined text-[20px]">tune</span>
-          <span class="font-bold text-sm">Filters</span>
+          <span class="font-bold text-sm">فيلتر</span>
         </button>
 
         <!-- Sort Button (far right) -->
@@ -136,7 +136,7 @@
           id="openSort"
           class="flex items-center gap-1 text-slate-800 dark:text-slate-200 text-sm font-bold bg-white dark:bg-card-dark py-1.5 px-3 rounded-full border border-slate-100 dark:border-slate-700"
         >
-          Sort by
+          الترتيب
           <span class="material-symbols-outlined text-[18px]">
             keyboard_arrow_down
           </span>
@@ -170,7 +170,7 @@
           <!-- Header -->
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-bold text-slate-900 dark:text-white">
-              Filters
+              الفيلتر
             </h3>
             <button
               id="closeFilters"
@@ -187,7 +187,7 @@
               <label
                 class="text-sm font-semibold text-slate-700 dark:text-slate-300"
               >
-                Max Price
+                أعلى سعر
               </label>
               <input
                 id="filter-price"
@@ -202,17 +202,17 @@
               <label
                 class="text-sm font-semibold text-slate-700 dark:text-slate-300"
               >
-                Age Range
+                العمر
               </label>
               <select
                 id="filter-age"
                 class="w-full mt-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-gray-800 p-2"
               >
                 <option value="">All</option>
-                <option value="0-2 Years">0–2 Years</option>
-                <option value="3-5 Years">3–5 Years</option>
-                <option value="6-8 Years">6–8 Years</option>
-                <option value="9+ Years">9+ Years</option>
+                <option value="0-2 Years">0–2 سنوات</option>
+                <option value="3-5 Years">3–5 سنوات</option>
+                <option value="6-8 Years">6–8 سنوات</option>
+                <option value="9+ Years">9+ سنوات</option>
               </select>
             </div>
 
@@ -227,32 +227,50 @@
                 id="filter-category"
                 class="w-full mt-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-gray-800 p-2"
               >
-                <option value="">All</option>
-                <option value="STEM Toys">STEM Toys</option>
-                <option value="Educational & Learning">
-                  Educational & Learning
+                <option value="">الكل</option>
+
+                <option value="ألعاب STEM">ألعاب STEM</option>
+
+                <option value="ألعاب تعليمية">ألعاب تعليمية</option>
+
+                <option value="الروبوتات والبرمجة">الروبوتات والبرمجة</option>
+
+                <option value="ألعاب ذكية">ألعاب ذكية</option>
+
+                <option value="ألعاب البناء والتشييد">
+                  ألعاب البناء والتشييد
                 </option>
-                <option value="Robotics & Coding">Robotics & Coding</option>
-                <option value="Smart Toys">Smart Toys</option>
-                <option value="Building & Construction">
-                  Building & Construction
+
+                <option value="مجموعات العلوم">مجموعات العلوم</option>
+
+                <option value="إلكترونيات وأدوات ذكية">
+                  إلكترونيات وأدوات ذكية
                 </option>
-                <option value="Science Kits">Science Kits</option>
-                <option value="Electronics & Gadgets">
-                  Electronics & Gadgets
+
+                <option value="ألعاب التحكم عن بُعد">
+                  ألعاب التحكم عن بُعد
                 </option>
-                <option value="Remote Control Toys">Remote Control Toys</option>
-                <option value="Puzzles & Brain Games">
-                  Puzzles & Brain Games
+
+                <option value="ألغاز وألعاب تنمية الذكاء">
+                  ألغاز وألعاب تنمية الذكاء
                 </option>
-                <option value="Creative & DIY Kits">Creative & DIY Kits</option>
-                <option value="Montessori Toys">Montessori Toys</option>
-                <option value="Outdoor Tech Toys">Outdoor Tech Toys</option>
-                <option value="Gaming & Interactive">
-                  Gaming & Interactive
+
+                <option value="مجموعات إبداعية وأعمال يدوية">
+                  مجموعات إبداعية وأعمال يدوية
                 </option>
-                <option value="Wearable Tech for Kids">
-                  Wearable Tech for Kids
+
+                <option value="ألعاب مونتيسوري">ألعاب مونتيسوري</option>
+
+                <option value="ألعاب تقنية للأنشطة الخارجية">
+                  ألعاب تقنية للأنشطة الخارجية
+                </option>
+
+                <option value="ألعاب تفاعلية وألعاب الفيديو">
+                  ألعاب تفاعلية وألعاب الفيديو
+                </option>
+
+                <option value="تقنيات قابلة للارتداء للأطفال">
+                  تقنيات قابلة للارتداء للأطفال
                 </option>
               </select>
             </div>
@@ -262,16 +280,16 @@
               <label
                 class="text-sm font-semibold text-slate-700 dark:text-slate-300"
               >
-                Gender
+                الجنس
               </label>
               <select
                 id="filter-gender"
                 class="w-full mt-1 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-gray-800 p-2"
               >
-                <option value="">All</option>
-                <option value="Boys">Boys</option>
-                <option value="Girls">Girls</option>
-                <option value="Unisex">Unisex</option>
+                <option value="">الكل</option>
+                <option value="الصبيان">الصبيان</option>
+                <option value="البنات">البنات</option>
+                <option value="للجنسين">للجنسين</option>
               </select>
             </div>
           </div>
@@ -282,14 +300,14 @@
               id="clearFilters"
               class="flex-1 rounded-lg border border-slate-300 dark:border-slate-600 py-2 font-semibold"
             >
-              Clear
+              ازالة
             </button>
             <button
               id="applyFilters"
               onclick="applyFilters()"
               class="flex-1 rounded-lg bg-primary text-white py-2 font-semibold"
             >
-              Apply
+              تأكيد
             </button>
           </div>
         </div>
@@ -305,7 +323,7 @@
           <!-- Header -->
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-bold text-slate-900 dark:text-white">
-              Sort by
+              ترتيب من
             </h3>
             <button id="closeSort" class="text-slate-400 hover:text-slate-700">
               <span class="material-symbols-outlined">close</span>
@@ -318,14 +336,14 @@
               data-sort="price-asc"
               class="sort-option w-full text-left px-4 py-2 rounded-lg hover:bg-slate-300 dark:hover:bg-gray-700 font-medium"
             >
-              Price: Low → High
+              الأرخص الى الأغلى
             </button>
 
             <button
               data-sort="price-desc"
               class="sort-option w-full text-left px-4 py-2 rounded-lg hover:bg-slate-300 dark:hover:bg-gray-700 font-medium"
             >
-              Price: High → Low
+              الأغلى الى الأرخص
             </button>
           </div>
         </div>
@@ -342,20 +360,20 @@
           href="./index.html"
         >
           <span class="material-symbols-outlined text-[26px]">home</span>
-          <span class="text-[10px] font-medium">Home</span>
+          <span class="text-[10px] font-medium">الصفحة الرئيسية</span>
         </a>
         <a class="flex flex-col items-center gap-1 text-[#913435]" href="#">
           <span class="material-symbols-outlined text-[26px] fill-1"
             >storefront</span
           >
-          <span class="text-[10px] font-bold">Shop</span>
+          <span class="text-[10px] font-bold">المتجر</span>
         </a>
         <a
           class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-primary transition-colors"
           href="https://wa.me/96171468381"
         >
           <span class="material-symbols-outlined text-[26px]">chat</span>
-          <span class="text-[10px] font-medium">Contact Us</span>
+          <span class="text-[10px] font-medium">تواصل معنا</span>
         </a>
       </div>
     </nav>
@@ -364,5 +382,5 @@
       class="fixed bottom-0 w-full h-safe bg-white dark:bg-background-dark z-30"
     ></div>
   </body>
-  <script src="./scripts/shop.js"></script>
+  <script src="../scripts/shopAR.js"></script>
 </html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Toy Store Product Page</title>
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e5782a",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style></style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white pb-28 antialiased selection:bg-primary/30"
+  >
+    <!-- Sticky Header -->
+    <header
+      class="sticky top-0 z-50 bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors"
+    >
+      <div class="flex items-center justify-between px-4 py-3">
+        <div class="flex items-center gap-1">
+          <div class="flex items-center">
+            <img src="/imgs/logo.png" alt="TechToys logo" class="h-12 w-auto" />
+          </div>
+          <h1
+            class="text-l font-black tracking-tight text-[#e5782a] dark:text-white"
+          >
+            TechToys
+          </h1>
+        </div>
+        <div>
+          <button
+            class="relative p-2 -mr-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+            onclick="window.location.href='/index.html'"
+          >
+            <span class="material-symbols-outlined text-[26px]">home</span>
+          </button>
+          <button
+            class="relative p-2 -mr-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+            onclick="window.location.href='/shop.html'"
+          >
+            <span class="material-symbols-outlined text-[26px]"
+              >storefront</span
+            >
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="w-full mx-auto lg:grid lg:grid-cols-[35%_1fr] lg:gap-6">
+      <!-- Image Gallery / Carousel -->
+      <section class="relative w-full bg-white dark:bg-[#1a2632] mb-1">
+        <div
+          class="flex overflow-x-auto snap-x snap-mandatory [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden"
+        >
+          <!-- Image 1 -->
+          <div
+            class="snap-center shrink-0 w-full p-6 flex items-center justify-center"
+          >
+            <div
+              class="relative w-full aspect-square rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800/50"
+            >
+              <div
+                id="item-img"
+                class="absolute inset-0 bg-cover bg-center"
+                data-alt="Image not Found."
+              ></div>
+            </div>
+          </div>
+        </div>
+        <!-- Pagination Dots -->
+        <!--<div class="flex justify-center gap-2 pb-4 lg:pb-0">
+          <div class="w-2 h-2 rounded-full bg-primary"></div>
+          <div
+            class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"
+          ></div>
+          <div
+            class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"
+          ></div>
+        </div>-->
+      </section>
+      <!-- Product Details Header -->
+      <div class="lg:col-span-1 space-y-6">
+        <section
+          class="px-5 pt-4 pb-6 bg-background-light dark:bg-background-dark"
+        >
+          <div class="flex items-start justify-between gap-4 mb-2">
+            <h2
+              id="item-name"
+              class="text-2xl font-bold leading-tight text-slate-900 dark:text-white"
+            >
+              <!-- title goes here -->
+            </h2>
+            <button
+              id="heartBtn"
+              class="text-slate-400 hover:text-red-500 transition-colors"
+              onclick="toggleHeart()"
+            >
+              <span class="material-symbols-outlined">favorite</span>
+            </button>
+          </div>
+          <div class="flex items-end gap-3 mb-4">
+            <span
+              id="item-price"
+              class="text-3xl font-bold text-slate-900 dark:text-white"
+              ><!-- price goes here -->></span
+            >
+            <span
+              id="item-price-before"
+              class="text-lg text-slate-400 line-through mb-1"
+              ><!-- old price goes here --></span
+            >
+            <span
+              class="text-xs font-bold text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded mb-1 ml-auto"
+              id="item-tag"
+              ><!-- tag goes here --></span
+            >
+          </div>
+          <!-- Rating Row -->
+          <!--<div class="flex items-center gap-1 mb-6">
+          <div class="flex text-amber-400">
+            <span class="material-symbols-outlined text-[20px] fill-current"
+              >star</span
+            >
+            <span class="material-symbols-outlined text-[20px] fill-current"
+              >star</span
+            >
+            <span class="material-symbols-outlined text-[20px] fill-current"
+              >star</span
+            >
+            <span class="material-symbols-outlined text-[20px] fill-current"
+              >star</span
+            >
+            <span class="material-symbols-outlined text-[20px] fill-current"
+              >star_half</span
+            >
+          </div>
+          <span
+            class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
+            >4.8</span
+          >
+          <span class="text-sm text-slate-500 underline ml-1 cursor-pointer"
+            >(254 reviews)</span
+          >
+        </div>-->
+          <!-- Trust & Safety Badges (Horizontal Scroll) -->
+          <div
+            id="badges"
+            class="flex pt-5 gap-3 overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden"
+          >
+            <!-- Badge 1 -->
+            <div
+              class="shrink-0 flex items-center gap-2 bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-700 px-3 rounded-lg shadow-sm min-w-[120px]"
+            >
+              <div class="flex flex-col">
+                <span
+                  class="text-[10px] uppercase tracking-wider text-slate-500 font-bold"
+                  >العمر</span
+                >
+                <span
+                  class="text-xs font-semibold text-slate-900 dark:text-white"
+                  id="item-age"
+                  ><!-- age range goes here --></span
+                >
+              </div>
+              <div
+                class="size-8 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary"
+              >
+                <span class="material-symbols-outlined text-[20px]"
+                  >child_care</span
+                >
+              </div>
+            </div>
+            <!-- Badge 2 -->
+            <div
+              class="shrink-0 flex items-center gap-2 bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-700 px-3 rounded-lg shadow-sm min-w-[120px]"
+            >
+              <div class="flex flex-col">
+                <span
+                  class="text-[10px] uppercase tracking-wider text-slate-500 font-bold"
+                  >الفئة</span
+                >
+                <span
+                  class="text-xs font-semibold text-slate-900 dark:text-white"
+                  id="item-category"
+                  ><!-- category goes here --></span
+                >
+              </div>
+              <div
+                class="size-8 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400"
+              >
+                <span class="material-symbols-outlined text-[20px]"
+                  >category</span
+                >
+              </div>
+            </div>
+            <!-- Badge 3 -->
+            <div
+              class="shrink-0 flex items-center gap-2 bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-700 px-3 rounded-lg shadow-sm min-w-[120px]"
+            >
+              <div class="flex flex-col">
+                <span
+                  class="text-[10px] uppercase tracking-wider text-slate-500 font-bold"
+                  >مناسب ل</span
+                >
+                <span
+                  class="text-xs font-semibold text-slate-900 dark:text-white"
+                  id="item-gender"
+                  ><!-- gender goes here --></span
+                >
+              </div>
+              <div
+                class="size-8 rounded-full bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400"
+              >
+                <span class="material-symbols-outlined text-[20px]">wc</span>
+              </div>
+            </div>
+            <!-- Badge 4 -->
+            <div
+              class="shrink-0 flex items-center gap-2 bg-white dark:bg-[#1a2632] border border-slate-200 dark:border-slate-700 px-3 rounded-lg shadow-sm min-w-[120px]"
+            >
+              <div class="flex flex-col">
+                <span
+                  class="text-[10px] uppercase tracking-wider text-slate-500 font-bold"
+                  >الأمان</span
+                >
+                <span
+                  class="text-xs font-semibold text-slate-900 dark:text-white"
+                  >مأكد</span
+                >
+              </div>
+              <div
+                class="size-8 rounded-full bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400"
+              >
+                <span class="material-symbols-outlined text-[20px]"
+                  >verified_user</span
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Divider -->
+        <!--<div class="h-1 bg-slate-100 dark:bg-slate-800/50 w-full"></div>-->
+        <!-- Description Section -->
+        <section class="px-5">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">
+            شرح اللعبة
+          </h3>
+          <!-- Bullet Points -->
+          <!--<ul class="space-y-3 mb-6">
+          <li class="flex items-start gap-3">
+            <span
+              class="mt-1 flex-shrink-0 size-1.5 rounded-full bg-primary"
+            ></span>
+            <span
+              class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
+              >Inspire creativity with 50 natural wood pieces designed to build
+              castles, bridges, and towers.</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <span
+              class="mt-1 flex-shrink-0 size-1.5 rounded-full bg-primary"
+            ></span>
+            <span
+              class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
+              >Sustainably sourced beech wood with smooth, sanded edges safe for
+              small hands.</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <span
+              class="mt-1 flex-shrink-0 size-1.5 rounded-full bg-primary"
+            ></span>
+            <span
+              class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
+              >Enhances fine motor skills, spatial reasoning, and imaginative
+              play.</span
+            >
+          </li>
+        </ul>-->
+          <!-- Full Details Accordion visual -->
+          <div class="border-t border-slate-100 dark:border-slate-800 pt-4">
+            <p
+              class="mt-1 text-sm text-slate-500 dark:text-slate-400 leading-relaxed"
+              id="item-desc"
+            >
+              <!-- description goes here -->
+            </p>
+          </div>
+        </section>
+        <!-- Divider -->
+        <div class="h-2 bg-slate-100 dark:bg-slate-800/50 w-full"></div>
+        <!-- Reviews Section -->
+        <!--<section class="px-5 py-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">
+            Parent Reviews
+          </h3>
+          <a class="text-sm font-semibold text-primary hover:underline" href="#"
+            >See All</a
+          >
+        </div>-->
+        <!-- Review Card -->
+        <!--<div
+          class="bg-white dark:bg-[#1a2632] border border-slate-100 dark:border-slate-800 rounded-xl p-4 shadow-sm"
+        >
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <div
+                class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden"
+                data-alt="Profile picture of Sarah J."
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDAS4x6pT-Jmm-y5A4B_O5NswOMmsbWnwpC-iibijw1QauDHhZKM1cP3FDCoRDq7RYlvspVAvLVVxpVQvbTvotNmMZ2AfBDjmLYV9a8dhfTxK6VuwDjbmlMcVPuGTwy1k2_SjZYp43O97Ccij5eOaRhMOo7tL537VbxsTex5ewibHuat4J8GcGQpCcuovVtTgvspS8rJmEphp1iW_grvQGucUAnbjgpFrINos0Ud2b0XA9eW6cwpNv8EbL7w0D9LZ5hGyuProccTvk');
+                  background-size: cover;
+                "
+              ></div>
+              <span class="text-sm font-semibold text-slate-900 dark:text-white"
+                >Sarah J.</span
+              >
+            </div>
+            <span class="text-xs text-slate-400">2 days ago</span>
+          </div>
+          <div class="flex text-amber-400 mb-2">
+            <span class="material-symbols-outlined text-[16px] fill-current"
+              >star</span
+            >
+            <span class="material-symbols-outlined text-[16px] fill-current"
+              >star</span
+            >
+            <span class="material-symbols-outlined text-[16px] fill-current"
+              >star</span
+            >
+            <span class="material-symbols-outlined text-[16px] fill-current"
+              >star</span
+            >
+            <span class="material-symbols-outlined text-[16px] fill-current"
+              >star</span
+            >
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-300 italic">
+            "My son absolutely loves this! The pieces are so smooth and sturdy.
+            I don't worry about splinters at all. Great investment."
+          </p>
+        </div>
+      </section>-->
+        <!-- Trust/Policy Links -->
+        <!--<section
+        class="px-5 py-4 pb-12 flex justify-center gap-6 text-xs text-slate-400"
+      >
+        <div class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]"
+            >local_shipping</span
+          >
+          <span>Free Shipping</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]"
+            >assignment_return</span
+          >
+          <span>30-Day Returns</span>
+        </div>
+      </section>-->
+      </div>
+    </main>
+    <!-- Sticky Bottom Bar -->
+    <div
+      class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#101922] border-t border-slate-200 dark:border-slate-800 p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] safe-pb"
+    >
+      <div class="max-w-lg mx-auto flex items-center gap-4">
+        <!-- Quantity Stepper -->
+        <div
+          class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg h-12"
+        >
+          <button
+            class="w-10 h-full flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white"
+            onclick="minusQty()"
+          >
+            <span class="material-symbols-outlined text-[20px]">remove</span>
+          </button>
+          <span
+            class="w-6 text-center text-base font-semibold text-slate-900 dark:text-white"
+            id="item-quantity"
+            >1</span
+          >
+          <button
+            class="w-10 h-full flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-white"
+            onclick="plusQty()"
+          >
+            <span class="material-symbols-outlined text-[20px]">add</span>
+          </button>
+        </div>
+        <!-- Add to Cart Button -->
+        <button
+          id="orderBtn"
+          class="flex-1 h-12 bg-primary hover:bg-[#913435] active:bg-blue-700 text-white font-bold rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 transition-all transform active:scale-[0.98]"
+          onclick="openWhatsApp()"
+        >
+          <span class="material-symbols-outlined">shopping_cart</span>
+          اطلب الآن
+        </button>
+      </div>
+    </div>
+  </body>
+  <script src="../scripts/itemAR.js"></script>
+</html>

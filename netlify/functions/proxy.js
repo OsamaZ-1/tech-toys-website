@@ -1,5 +1,5 @@
 export async function handler(event, context) {
-  const url = `https://script.google.com/macros/s/AKfycbzme_gGkmote3FNq6KF7K17f7Ni3EHUDqP05yBCkEHWul7H4gUVmWnmOjAmbsOAjXsd/exec`;
+  const url = `https://script.google.com/macros/s/AKfycbzn1A1abZb9MVpIZqQv0PGUe6JdnImMitmkH7u6czcFbSmk-bC_feQqMDyyt36-Zyin/exec`;
 
   // Determine fetch options
   const options = {
