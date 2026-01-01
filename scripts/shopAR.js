@@ -64,7 +64,7 @@ function renderProducts(products) {
           alt="${product.name}"
           loading="lazy"
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
-          onclick="window.location.href='/item.html?itemNo=${product.itemNo}'"
+          onclick="window.location.href='./item.html?itemNo=${product.itemNo}'"
           onerror="
             if(!this.retries) this.retries = 7;
             if(this.retries-- > 0){
@@ -79,7 +79,7 @@ function renderProducts(products) {
               <div
                 class="absolute top-2 left-2 px-2 py-1 rounded-lg backdrop-blur-sm text-xs font-bold uppercase tracking-wider bg-red-500 text-white"
               >
-                Sold Out!
+                نفذت الكمية
               </div>`
             : product.tag
               ? `
@@ -108,7 +108,7 @@ function renderProducts(products) {
         </h3>
 
         <div class="flex items-center gap-1 mb-2">
-          <span class="text-[11px] text-slate-500">Age:</span>
+          <span class="text-[11px] text-slate-500">العمر:</span>
           <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
             ${product.age || "—"}
           </span>
