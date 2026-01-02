@@ -9,15 +9,21 @@ form.addEventListener('submit', async (e) => {
 
   const itemNo = document.getElementById('add-id').value;
   const name = document.getElementById('add-name').value;
+  const nameAR = document.getElementById('add-nameAR').value;
   const category = document.getElementById('add-category').value;
+  const categoryAR = document.getElementById('add-categoryAR').value;
   const price = document.getElementById('add-price').value;
   const priceBefore = document.getElementById('add-price-before').value;
   const age = document.getElementById('add-age-range').value;
+  const ageAR = document.getElementById('add-age-rangeAR').value;
   const gender = document.getElementById('add-gender').value;
+  const genderAR = document.getElementById('add-genderAR').value;
   const quantity = document.getElementById('add-quantity').value;
   const tagTxt = document.getElementById('add-tag-text').value;
+  const tagTxtAR = document.getElementById('add-tag-textAR').value;
   const tagColor = document.getElementById('add-tag-color').value;
   const description = document.getElementById('add-description').value;
+  const descriptionAR = document.getElementById('add-descriptionAR').value;
   const file = document.getElementById('add-imageFile').files[0];
   const featured = document.getElementById('add-featured').checked;
 
@@ -46,7 +52,13 @@ form.addEventListener('submit', async (e) => {
           quantity,
           tag: tagTxt,
           tagColor,
-          featured
+          featured,
+          nameAR,
+          categoryAR,
+          ageAR,
+          genderAR,
+          descriptionAR,
+          tagAR: tagTxtAR
         }
       })
     });
@@ -138,15 +150,21 @@ function openEditModal(product){
 
     document.getElementById("edit-id").value = product.itemNo;
     document.getElementById("edit-name").value = product.name;
+    document.getElementById("edit-nameAR").value = product.nameAR;
     document.getElementById("edit-price").value = product.price;
     document.getElementById("edit-price-before").value = product.priceBefore;
     document.getElementById("edit-age-range").value = product.age;
+    document.getElementById("edit-age-rangeAR").value = product.ageAR;
     document.getElementById("edit-category").value = product.category;
+    document.getElementById("edit-categoryAR").value = product.categoryAR;
     document.getElementById("edit-gender").value = product.gender;
+    document.getElementById("edit-genderAR").value = product.genderAR;
     document.getElementById("edit-quantity").value = product.quantity;
     document.getElementById("edit-tag-text").value = product.tag;
+    document.getElementById("edit-tag-textAR").value = product.tagAR;
     document.getElementById("edit-tag-color").value = product.tagColor;
     document.getElementById("edit-description").value = product.description;
+    document.getElementById("edit-descriptionAR").value = product.descriptionAR;
     document.getElementById("edit-imagePreview").src = product.images;
     document.getElementById("edit-featured").checked = product.featured === true;
 }
@@ -177,15 +195,21 @@ editForm.addEventListener("submit", async (e) => {
   const updatedProduct = {
     itemNo: document.getElementById("edit-id").value,
     name: document.getElementById("edit-name").value,
+    nameAR: document.getElementById("edit-nameAR").value,
     price: document.getElementById("edit-price").value,
     priceBefore: document.getElementById("edit-price-before").value,
     age: document.getElementById("edit-age-range").value,
+    ageAR: document.getElementById("edit-age-rangeAR").value,
     category: document.getElementById("edit-category").value,
+    categoryAR: document.getElementById("edit-categoryAR").value,
     gender: document.getElementById("edit-gender").value,
+    genderAR: document.getElementById("edit-genderAR").value,
     quantity: document.getElementById("edit-quantity").value,
     tag: document.getElementById("edit-tag-text").value,
+    tagAR: document.getElementById("edit-tag-textAR").value,
     tagColor: document.getElementById("edit-tag-color").value,
     description: document.getElementById("edit-description").value,
+    descriptionAR: document.getElementById("edit-descriptionAR").value,
     images: imgURL,
     featured: document.getElementById("edit-featured").checked === true
   };
@@ -263,6 +287,8 @@ const table = new Tabulator("#productTable", {
 
     { title: "Name", field: "name", headerFilter: "input" },
 
+    { title: "Name AR", field: "nameAR", headerFilter: "input" },
+
     { title: "Price", field: "price", headerFilter: "input" },
 
     { title: "Before", field: "priceBefore", headerFilter: "input" },
@@ -292,9 +318,80 @@ const table = new Tabulator("#productTable", {
       }
     },
 
-    { title: "Age", field: "age", width: 90 },
+    {
+      title: "Category AR",
+      field: "categoryAR",
+      headerFilter: "select",
+      headerFilterParams: {
+        values: {
+          "": "الكل",
+          "ألعاب STEM": "ألعاب STEM",
+          "ألعاب تعليمية": "ألعاب تعليمية",
+          "الروبوتات والبرمجة": "الروبوتات والبرمجة",
+          "ألعاب ذكية": "ألعاب ذكية",
+          "ألعاب البناء والتشييد": "ألعاب البناء والتشييد",
+          "مجموعات العلوم": "مجموعات العلوم",
+          "إلكترونيات وأدوات ذكية": "إلكترونيات وأدوات ذكية",
+          "ألعاب التحكم عن بُعد": "ألعاب التحكم عن بُعد",
+          "ألغاز وألعاب تنمية الذكاء": "ألغاز وألعاب تنمية الذكاء",
+          "مجموعات إبداعية وأعمال يدوية": "مجموعات إبداعية وأعمال يدوية",
+          "ألعاب مونتيسوري": "ألعاب مونتيسوري",
+          "ألعاب تقنية للأنشطة الخارجية": "ألعاب تقنية للأنشطة الخارجية",
+          "ألعاب تفاعلية وألعاب الفيديو": "ألعاب تفاعلية وألعاب الفيديو",
+          "تقنيات قابلة للارتداء للأطفال": "تقنيات قابلة للارتداء للأطفال"
+        }
+      }
+    },
 
-    { title: "Gender", field: "gender", width: 100 },
+    { title: "Age", field: "age", 
+      headerFilter: "select",
+      headerFilterParams: {
+       values: {
+        "": "All",
+        "0-2 Years": "0-2 Years",
+        "3-5 Years": "3-5 Years",
+        "6-8 Years": "6-8 Years",
+        "9+ Years": "9+ Years"
+       }
+      }
+    },
+
+    { title: "Age AR", field: "ageAR",
+      headerFilter: "select",
+      headerFilterParams: {
+        values: {
+          "": "الكل",
+          "0-2 سنوات": "0-2 سنوات",
+          "3-5 سنوات": "3-5 سنوات",
+          "6-8 سنوات": "6-8 سنوات",
+          "9+ سنوات": "9+ سنوات"
+        }
+      }
+    },
+
+    { title: "Gender", field: "gender",
+      headerFilter: "select",
+      headerFilterParams: {
+        values: {
+          "": "All",
+          "Unisex": "Unisex",
+          "Boys": "Boys",
+          "Girls": "Girls"
+        }
+      }
+    },
+
+    { title: "Gender AR", field: "genderAR",
+      headerFilter: "select",
+      headerFilterParams: {
+        values: {
+          "": "الكل",
+          "للجنسين": "للجنسين",
+          "الصبيان": "الصبيان",
+          "البنات": "البنات"
+        }
+      }
+    },
 
     { title: "Qty", field: "quantity", width: 80 },
 
