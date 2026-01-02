@@ -93,7 +93,7 @@ async function renderFeaturedProds() {
                 onerror="
                   if(!this.retries) this.retries = 7;
                   if(this.retries-- > 0){
-                    setTimeout(() => { this.src='${product.image}'; }, 5000);
+                    setTimeout(() => { this.src = this.dataset.src; }, 5000);
                   }
                 "
             />
