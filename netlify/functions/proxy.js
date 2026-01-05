@@ -1,5 +1,5 @@
 export async function handler(event, context) {
-  const url = `https://script.google.com/macros/s/AKfycbzn1A1abZb9MVpIZqQv0PGUe6JdnImMitmkH7u6czcFbSmk-bC_feQqMDyyt36-Zyin/exec`;
+  const url = process.env.APPS_SCRIPT_URL;
 
   // Determine fetch options
   const options = {
