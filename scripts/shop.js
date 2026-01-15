@@ -283,7 +283,7 @@ document.querySelectorAll(".sort-option").forEach(btn => {
 });
 
 function openWhatsApp(message = "") {
-  const phoneNumber = "96171468381"; // WhatsApp number (no spaces or symbols)
+  const phoneNumber = "96171146695"; // WhatsApp number (no spaces or symbols)
   let url = `https://wa.me/${phoneNumber}`;
 
   // If message is provided, encode it and add to the URL

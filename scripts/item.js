@@ -81,7 +81,7 @@ function plusQty(){
 }
 
 function openWhatsApp() {
-  const phoneNumber = "96171468381"; // WhatsApp number (no spaces or symbols)
+  const phoneNumber = "96171146695"; // WhatsApp number (no spaces or symbols)
   let url = `https://wa.me/${phoneNumber}`;
 
   let message = `Hello, I would like to order ${document.getElementById("item-quantity").textContent} of ${theItem.name} if you please.`;
