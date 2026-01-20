@@ -59,7 +59,7 @@ async function fetchProducts() {
             itemNo: item.itemNo,
             name: item.nameAR,
             price: item.price,
-            images: item.images,
+            images: item.images.split("|||")[0],
             age: item.ageAR,
         }));
 

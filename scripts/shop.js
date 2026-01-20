@@ -60,7 +60,7 @@ function renderProducts(products) {
     card.innerHTML = `
       <div class="relative w-full aspect-square rounded-lg overflow-hidden mb-3 bg-gray-100 dark:bg-gray-800">
         <img
-          src="${product.images || ''}"
+          src="${product.images.split("|||")[0] || ''}"
           alt="${product.name}"
           loading="lazy"
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"

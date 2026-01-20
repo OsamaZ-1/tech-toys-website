@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html class="light" lang="en">
   <head>
@@ -69,13 +69,13 @@
         <div>
           <button
             class="relative p-2 -mr-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
-            onclick="window.location.href='/index.html'"
+            onclick="window.location.href = '/index.html'"
           >
             <span class="material-symbols-outlined text-[26px]">home</span>
           </button>
           <button
             class="relative p-2 -mr-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
-            onclick="window.location.href='/shop.html'"
+            onclick="window.location.href = '/shop.html'"
           >
             <span class="material-symbols-outlined text-[26px]"
               >storefront</span
@@ -90,19 +90,11 @@
         <div
           class="flex overflow-x-auto snap-x snap-mandatory [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden"
         >
-          <!-- Image 1 -->
           <div
-            class="snap-center shrink-0 w-full p-6 flex items-center justify-center"
+            id="imageScroller"
+            class="flex overflow-x-auto snap-x snap-mandatory [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            <div
-              class="relative w-full aspect-square rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800/50"
-            >
-              <div
-                id="item-img"
-                class="absolute inset-0 bg-cover bg-center"
-                data-alt="Image not Found."
-              ></div>
-            </div>
+            <!-- Images will be injected here -->
           </div>
         </div>
         <!-- Pagination Dots -->

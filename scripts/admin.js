@@ -29,9 +29,27 @@ form.addEventListener('submit', async (e) => {
 
   if (!file) return alert("Select an image!");
 
+  // Multiple Image Selection
+  let selectedImages = [];
+
+  const input = document.getElementById("add-imageFile");
+  const previewContainer = document.getElementById("imagePreviewContainer");
+
+  input.addEventListener("change", function () {
+    const files = Array.from(this.files);
+
+    files.forEach(file => {
+      selectedImages.push(file);
+      renderPreview(file);
+    });
+
+    // reset input so same file can be selected again if removed
+    input.value = "";
+  });
+
   try {
     // 1️⃣ Upload image to ImgBB
-    const imageUrl = await uploadImgToHost(file); // direct image URL
+    const imageUrl = await uploadMultipleImages(selectedImages); // direct image URL
 
     // 2️⃣ Send product info + image URL to Google Sheet
     const sheetResponse = await fetch(WEB_APP_URL, {
@@ -79,6 +97,28 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
+function renderPreview(file) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "relative";
+
+  const img = document.createElement("img");
+  img.src = URL.createObjectURL(file);
+  img.className = "h-24 w-24 object-cover rounded-lg border";
+
+  const removeBtn = document.createElement("button");
+  removeBtn.innerHTML = "✕";
+  removeBtn.className =
+    "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-sm flex items-center justify-center";
+
+  removeBtn.onclick = () => {
+    selectedImages = selectedImages.filter(f => f !== file);
+    wrapper.remove();
+  };
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(removeBtn);
+  previewContainer.appendChild(wrapper);
+}
 
 // 3️⃣ Fetch products and display in table
 async function fetchProducts() {
@@ -221,24 +261,11 @@ editForm.addEventListener("submit", async (e) => {
   document.getElementById("editModal").classList.add("hidden");
 });
 
-// Upload image to ImgBB
-async function uploadImgToHost(file){
-    const formData = new FormData();
-    formData.append("image", file); // key is 'image'
-    formData.append("key", "9d3fdcc4c4819328a472cde28eec0134"); // your API key
-
-    const imgbbResponse = await fetch("https://api.imgbb.com/1/upload", {
-      method: "POST",
-      body: formData
-    });
-
-    const imgData = await imgbbResponse.json();
-
-    if (!imgData || !imgData.data || !imgData.data.url) {
-      return alert("Image upload failed!");
-    }
-
-    return imgData.data.url; // direct image URL
+// Upload Image to host
+async function uploadMultipleImages(files) {
+  const uploadPromises = files.map(file => uploadImgToHost(file));
+  const urls = await Promise.all(uploadPromises);
+  return urls.join("|||");
 }
 
 // Handle File Box
@@ -276,10 +303,19 @@ const table = new Tabulator("#productTable", {
     {
       title: "Image",
       field: "images",
-      formatter: "image",
-      formatterParams: {
-        height: "50px",
-        width: "50px"
+      formatter: function (cell) {
+        const value = cell.getValue();
+        if (!value) return "";
+
+        // Get first image URL
+        const firstImage = value.split("|||")[0];
+
+        return `
+          <img
+            src="${firstImage}"
+            style="width:50px;height:50px;object-fit:cover;border-radius:6px"
+          />
+        `;
       }
     },
 

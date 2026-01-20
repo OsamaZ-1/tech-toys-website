@@ -20,7 +20,38 @@ async function renderProduct() {
     const item = await fetchProducts();
     theItem = item;
 
-    document.getElementById("item-img").style.backgroundImage = `url('${item.images}')`;
+    const scroller = document.getElementById("imageScroller");
+
+    // Clear previous images (important if reused)
+    scroller.innerHTML = "";
+
+    // Split image URLs
+    const images = item.images ? item.images.split("|||") : [];
+
+    // Fallback if no images
+    if (!images.length) {
+      images.push(""); // empty placeholder
+    }
+
+    images.forEach(url => {
+      const slide = document.createElement("div");
+      slide.className =
+        "snap-center shrink-0 w-full p-6 flex items-center justify-center";
+
+      slide.innerHTML = `
+        <div class="relative w-full aspect-square rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800/50">
+          <div
+            class="absolute inset-0 bg-cover bg-center"
+            style="background-image: url('${url}')"
+            data-alt="Image not Found."
+          ></div>
+        </div>
+      `;
+
+      scroller.appendChild(slide);
+    });
+
+
     document.getElementById("item-name").textContent = item.name;
     document.getElementById("item-price").textContent = `$${item.price}`;
     document.getElementById("item-price-before").textContent = item.priceBefore !== "" ? `$${item.priceBefore}` : "";

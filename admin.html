@@ -499,10 +499,11 @@
 
                   <!-- Preview -->
                   <div class="w-full mb-3">
-                    <img
-                      id="imagePreview"
-                      class="max-h-32 mx-auto hidden rounded-lg"
-                    />
+                    <!-- Preview Container -->
+                    <div
+                      id="imagePreviewContainer"
+                      class="flex flex-wrap gap-3 mb-3 justify-center"
+                    ></div>
                   </div>
 
                   <!-- Upload Box -->
@@ -525,7 +526,13 @@
                           drag and drop
                         </p>
                       </div>
-                      <input class="hidden" id="add-imageFile" type="file" />
+                      <input
+                        class="hidden"
+                        id="add-imageFile"
+                        type="file"
+                        accept="image/*"
+                        multiple
+                      />
                     </label>
                   </div>
                 </label>
