@@ -85,7 +85,7 @@ form.addEventListener('submit', async (e) => {
     if (result.success) {
       showToast("Product added successfully!", "success");
       form.reset();
-      document.getElementById("imagePreview").classList.add("hidden");
+      document.getElementById("imagePreviewContainer").classList.add("hidden");
       fetchProducts();
     } else {
       showToast("Failed to save product to sheet.", "failure");
@@ -271,10 +271,9 @@ async function uploadMultipleImages(files) {
 // Handle File Box
 document.getElementById("add-imageFile").addEventListener("change", function () {
   const file = this.files[0];
-  const preview = document.getElementById("imagePreview");
+  const preview = document.getElementById("imagePreviewContainer");
 
   if (file) {
-    preview.src = URL.createObjectURL(file);
     preview.classList.remove("hidden");
   }
 });
