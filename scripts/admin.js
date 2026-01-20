@@ -13,6 +13,7 @@ document.getElementById("add-imageFile").addEventListener("change", function (e)
   previewContainer.classList.remove("hidden");
 
   files.forEach(file => {
+    console.log(file);
     selectedImages.push(file);
     renderPreview(file, selectedImages.length - 1);
   });
