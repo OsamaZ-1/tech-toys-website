@@ -571,7 +571,9 @@ function showToast(message, type = "success", duration = 3000) {
 // Login Logic
 // Add your allowed emails here
 const ALLOWED_EMAILS = [
-  "zammarosama@gmail.com"
+  "zammarosama@gmail.com",
+  "loai.wsrouji@gmail.com",
+  "ziad.kurdi11@hotmail.com"
 ];
 
 // Wait for Identity to initialize
