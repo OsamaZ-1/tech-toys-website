@@ -32,22 +32,19 @@ form.addEventListener('submit', async (e) => {
   // Multiple Image Selection
   let selectedImages = [];
 
-  const input = document.getElementById("add-imageFile");
-  console.log("Input element:", input);
-
-
-  input.addEventListener("change", function () {
-    const files = Array.from(this.files);
+document.addEventListener("change", function (e) {
+  if (e.target.id === "add-imageFile") {
+    const files = Array.from(e.target.files);
 
     files.forEach(file => {
       selectedImages.push(file);
       renderPreview(file);
     });
-    console.log(selectedImages);
 
-    // reset input so same file can be selected again if removed
-    input.value = "";
-  });
+    console.log(selectedImages);
+    e.target.value = "";
+  }
+});
 
   try {
     // 1️⃣ Upload image to ImgBB
