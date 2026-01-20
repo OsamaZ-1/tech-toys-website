@@ -13,7 +13,6 @@ document.getElementById("add-imageFile").addEventListener("change", function (e)
   previewContainer.classList.remove("hidden");
 
   files.forEach(file => {
-    console.log(file);
     selectedImages.push(file);
     renderPreview(file, selectedImages.length - 1);
   });
@@ -36,8 +35,14 @@ function renderPreview(file, index) {
   removeBtn.className =
     "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-sm flex items-center justify-center";
 
-  removeBtn.onclick = () => {
-    selectedImages.splice(index, 1);
+  removeBtn.onclick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    selectedImages = selectedImages.filter(
+      f => !(f.name === file.name && f.lastModified === file.lastModified)
+    );
+
     wrapper.remove();
 
     if (selectedImages.length === 0) {
