@@ -573,7 +573,7 @@ function showToast(message, type = "success", duration = 3000) {
 const ALLOWED_EMAILS = [
   "zammarosama@gmail.com",
   "loai.wsrouji@gmail.com",
-  "ziad.kurdi11@hotmail.com"
+  "ziad.kurdi31@gmail.com"
 ];
 
 // Wait for Identity to initialize
