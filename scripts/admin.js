@@ -32,19 +32,19 @@ form.addEventListener('submit', async (e) => {
   // Multiple Image Selection
   let selectedImages = [];
 
-document.addEventListener("change", function (e) {
-  if (e.target.id === "add-imageFile") {
-    const files = Array.from(e.target.files);
+  document.addEventListener("change", function (e) {
+    if (e.target.id === "add-imageFile") {
+      const files = Array.from(e.target.files);
 
-    files.forEach(file => {
-      selectedImages.push(file);
-      renderPreview(file);
-    });
+      files.forEach(file => {
+        selectedImages.push(file);
+        renderPreview(file);
+      });
 
-    console.log(selectedImages);
-    e.target.value = "";
-  }
-});
+      console.log(selectedImages);
+      e.target.value = "";
+    }
+  });
 
   try {
     // 1️⃣ Upload image to ImgBB
