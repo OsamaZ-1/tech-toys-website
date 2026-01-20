@@ -250,22 +250,64 @@ function closeEditModal(){
     modal.classList.add("hidden");
 }
 
+// Multiple Image Selection
+let selectedImages_edit = [];
+
+document.getElementById("edit-imageFile").addEventListener("change", function (e) {
+  const files = Array.from(e.target.files);
+  const previewContainer = document.getElementById("imagePreviewContainer-edit");
+  previewContainer.classList.remove("hidden");
+
+  files.forEach(file => {
+    selectedImages_edit.push(file);
+    renderPreviewEdit(file, selectedImages_edit.length - 1);
+  });
+
+  e.target.value = ""; // reset input
+});
+
+function renderPreviewEdit(file, index) {
+  const previewContainer = document.getElementById("imagePreviewContainer-edit");
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "relative";
+
+  const img = document.createElement("img");
+  img.src = URL.createObjectURL(file);
+  img.className = "h-24 w-24 object-cover rounded-lg border";
+
+  const removeBtn = document.createElement("button");
+  removeBtn.innerHTML = "✕";
+  removeBtn.className =
+    "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-sm flex items-center justify-center";
+
+  removeBtn.onclick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    selectedImages_edit = selectedImages_edit.filter(
+      f => !(f.name === file.name && f.lastModified === file.lastModified)
+    );
+
+    wrapper.remove();
+
+    if (selectedImages_edit.length === 0) {
+      previewContainer.classList.add("hidden");
+    }
+  };
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(removeBtn);
+  previewContainer.appendChild(wrapper);
+}
+
 // Edit Modal Submit
 const editForm = document.getElementById("editModal");
 editForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // get image for update
-  const imgFile = document.getElementById("edit-imageFile").files[0];
-  const editPreview = document.getElementById("edit-imagePreview");
-
-  imgURL = undefined;
-  if (!imgFile) {
-    imgURL = editPreview.src;
-  }
-  else{
-    imgURL = await uploadImgToHost(imgFile);
-  }
+  // 1️⃣ Upload image to ImgBB
+  const imageUrl = await uploadMultipleImages(selectedImages_edit); // direct image URL
 
   // Gather updated values
   const updatedProduct = {
@@ -286,7 +328,7 @@ editForm.addEventListener("submit", async (e) => {
     tagColor: document.getElementById("edit-tag-color").value,
     description: document.getElementById("edit-description").value,
     descriptionAR: document.getElementById("edit-descriptionAR").value,
-    images: imgURL,
+    images: imageUrl,
     featured: document.getElementById("edit-featured").checked === true
   };
 
@@ -295,6 +337,7 @@ editForm.addEventListener("submit", async (e) => {
 
   // Close modal
   document.getElementById("editModal").classList.add("hidden");
+  selectedImages_edit = [];
 });
 
 document.getElementById("edit-imageFile").addEventListener("change", function () {
