@@ -35,8 +35,9 @@ function renderPreview(file) {
     "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-sm flex items-center justify-center";
 
   removeBtn.onclick = () => {
-    selectedImages = selectedImages.filter(f => f !== file);
+    selectedImages = selectedImages.filter(f => f.name !== file.name);
     wrapper.remove();
+
     if (selectedImages.length === 0) {
       previewContainer.classList.add("hidden");
     }
@@ -135,6 +136,7 @@ form.addEventListener('submit', async (e) => {
       showToast("Product added successfully!", "success");
       form.reset();
       document.getElementById("imagePreviewContainer").classList.add("hidden");
+      selectedImages = [];
       fetchProducts();
     } else {
       showToast("Failed to save product to sheet.", "failure");
