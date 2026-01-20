@@ -220,6 +220,7 @@ async function deleteProduct(productID) {
 }
 
 // Edit Modal Functions
+let old_urls = "";
 function openEditModal(product){
     const modal = document.getElementById("editModal");
     modal.classList.remove("hidden");
@@ -241,8 +242,8 @@ function openEditModal(product){
     document.getElementById("edit-tag-color").value = product.tagColor;
     document.getElementById("edit-description").value = product.description;
     document.getElementById("edit-descriptionAR").value = product.descriptionAR;
-    document.getElementById("edit-imagePreview").src = product.images;
     document.getElementById("edit-featured").checked = product.featured === true;
+    old_urls = product.images;
 }
 
 function closeEditModal(){
@@ -307,7 +308,9 @@ editForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   // 1️⃣ Upload image to ImgBB
-  const imageUrl = await uploadMultipleImages(selectedImages_edit); // direct image URL
+  let imageUrl = old_urls;
+  if (selectedImages_edit.length > 0)
+    imageUrl = await uploadMultipleImages(selectedImages_edit); // direct image URL
 
   // Gather updated values
   const updatedProduct = {
