@@ -261,6 +261,25 @@ editForm.addEventListener("submit", async (e) => {
   document.getElementById("editModal").classList.add("hidden");
 });
 
+async function uploadImgToHost(file){
+    const formData = new FormData();
+    formData.append("image", file); // key is 'image'
+    formData.append("key", "9d3fdcc4c4819328a472cde28eec0134"); // your API key
+
+    const imgbbResponse = await fetch("https://api.imgbb.com/1/upload", {
+      method: "POST",
+      body: formData
+    });
+
+    const imgData = await imgbbResponse.json();
+
+    if (!imgData || !imgData.data || !imgData.data.url) {
+      return alert("Image upload failed!");
+    }
+
+    return imgData.data.url; // direct image URL
+  }
+
 // Upload Image to host
 async function uploadMultipleImages(files) {
   const uploadPromises = files.map(file => uploadImgToHost(file));
