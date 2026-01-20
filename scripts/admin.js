@@ -96,8 +96,6 @@ form.addEventListener('submit', async (e) => {
   const file = document.getElementById('add-imageFile').files[0];
   const featured = document.getElementById('add-featured').checked;
 
-  if (!file) return alert("Select an image!");
-
   try {
     // 1️⃣ Upload image to ImgBB
     const imageUrl = await uploadMultipleImages(selectedImages); // direct image URL
