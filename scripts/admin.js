@@ -14,14 +14,15 @@ document.getElementById("add-imageFile").addEventListener("change", function (e)
 
   files.forEach(file => {
     selectedImages.push(file);
-    renderPreview(file);
+    renderPreview(file, selectedImages.length - 1);
   });
 
   e.target.value = ""; // reset input
 });
 
-function renderPreview(file) {
+function renderPreview(file, index) {
   const previewContainer = document.getElementById("imagePreviewContainer");
+
   const wrapper = document.createElement("div");
   wrapper.className = "relative";
 
@@ -35,7 +36,7 @@ function renderPreview(file) {
     "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-sm flex items-center justify-center";
 
   removeBtn.onclick = () => {
-    selectedImages = selectedImages.filter(f => f.name !== file.name);
+    selectedImages.splice(index, 1);
     wrapper.remove();
 
     if (selectedImages.length === 0) {
@@ -47,6 +48,7 @@ function renderPreview(file) {
   wrapper.appendChild(removeBtn);
   previewContainer.appendChild(wrapper);
 }
+
 
 async function uploadImgToHost(file){
     const formData = new FormData();
