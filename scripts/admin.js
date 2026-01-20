@@ -33,7 +33,6 @@ form.addEventListener('submit', async (e) => {
   let selectedImages = [];
 
   const input = document.getElementById("add-imageFile");
-  const previewContainer = document.getElementById("imagePreviewContainer");
 
   input.addEventListener("change", function () {
     const files = Array.from(this.files);
@@ -42,6 +41,7 @@ form.addEventListener('submit', async (e) => {
       selectedImages.push(file);
       renderPreview(file);
     });
+    console.log(selectedImages);
 
     // reset input so same file can be selected again if removed
     input.value = "";
@@ -98,6 +98,7 @@ form.addEventListener('submit', async (e) => {
 });
 
 function renderPreview(file) {
+  const previewContainer = document.getElementById("imagePreviewContainer");
   const wrapper = document.createElement("div");
   wrapper.className = "relative";
 
