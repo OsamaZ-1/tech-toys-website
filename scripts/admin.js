@@ -4,6 +4,75 @@ const productTable = document.getElementById('productTable');
 // Google Apps Script endpoint for your sheet
 const WEB_APP_URL = "/.netlify/functions/proxy";
 
+// Multiple Image Selection
+let selectedImages = [];
+
+document.getElementById("add-imageFile").addEventListener("change", function (e) {
+  const files = Array.from(e.target.files);
+  const previewContainer = document.getElementById("imagePreviewContainer");
+  previewContainer.classList.remove("hidden");
+
+  files.forEach(file => {
+    selectedImages.push(file);
+    renderPreview(file);
+  });
+
+  e.target.value = ""; // reset input
+});
+
+function renderPreview(file) {
+  const previewContainer = document.getElementById("imagePreviewContainer");
+  const wrapper = document.createElement("div");
+  wrapper.className = "relative";
+
+  const img = document.createElement("img");
+  img.src = URL.createObjectURL(file);
+  img.className = "h-24 w-24 object-cover rounded-lg border";
+
+  const removeBtn = document.createElement("button");
+  removeBtn.innerHTML = "✕";
+  removeBtn.className =
+    "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-sm flex items-center justify-center";
+
+  removeBtn.onclick = () => {
+    selectedImages = selectedImages.filter(f => f !== file);
+    wrapper.remove();
+    if (selectedImages.length === 0) {
+      previewContainer.classList.add("hidden");
+    }
+  };
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(removeBtn);
+  previewContainer.appendChild(wrapper);
+}
+
+async function uploadImgToHost(file){
+    const formData = new FormData();
+    formData.append("image", file); // key is 'image'
+    formData.append("key", "9d3fdcc4c4819328a472cde28eec0134"); // your API key
+
+    const imgbbResponse = await fetch("https://api.imgbb.com/1/upload", {
+      method: "POST",
+      body: formData
+    });
+
+    const imgData = await imgbbResponse.json();
+
+    if (!imgData || !imgData.data || !imgData.data.url) {
+      return alert("Image upload failed!");
+    }
+
+    return imgData.data.url; // direct image URL
+  }
+
+// Upload Image to host
+async function uploadMultipleImages(files) {
+  const uploadPromises = files.map(file => uploadImgToHost(file));
+  const urls = await Promise.all(uploadPromises);
+  return urls.join("|||");
+}
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -28,23 +97,6 @@ form.addEventListener('submit', async (e) => {
   const featured = document.getElementById('add-featured').checked;
 
   if (!file) return alert("Select an image!");
-
-  // Multiple Image Selection
-  let selectedImages = [];
-
-  document.addEventListener("change", function (e) {
-    if (e.target.id === "add-imageFile") {
-      const files = Array.from(e.target.files);
-
-      files.forEach(file => {
-        selectedImages.push(file);
-        renderPreview(file);
-      });
-
-      console.log(selectedImages);
-      e.target.value = "";
-    }
-  });
 
   try {
     // 1️⃣ Upload image to ImgBB
@@ -95,30 +147,6 @@ form.addEventListener('submit', async (e) => {
     showToast("Error uploading image or saving data.", "failure");
   }
 });
-
-function renderPreview(file) {
-  const previewContainer = document.getElementById("imagePreviewContainer");
-  const wrapper = document.createElement("div");
-  wrapper.className = "relative";
-
-  const img = document.createElement("img");
-  img.src = URL.createObjectURL(file);
-  img.className = "h-24 w-24 object-cover rounded-lg border";
-
-  const removeBtn = document.createElement("button");
-  removeBtn.innerHTML = "✕";
-  removeBtn.className =
-    "absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-sm flex items-center justify-center";
-
-  removeBtn.onclick = () => {
-    selectedImages = selectedImages.filter(f => f !== file);
-    wrapper.remove();
-  };
-
-  wrapper.appendChild(img);
-  wrapper.appendChild(removeBtn);
-  previewContainer.appendChild(wrapper);
-}
 
 // 3️⃣ Fetch products and display in table
 async function fetchProducts() {
@@ -259,42 +287,6 @@ editForm.addEventListener("submit", async (e) => {
 
   // Close modal
   document.getElementById("editModal").classList.add("hidden");
-});
-
-async function uploadImgToHost(file){
-    const formData = new FormData();
-    formData.append("image", file); // key is 'image'
-    formData.append("key", "9d3fdcc4c4819328a472cde28eec0134"); // your API key
-
-    const imgbbResponse = await fetch("https://api.imgbb.com/1/upload", {
-      method: "POST",
-      body: formData
-    });
-
-    const imgData = await imgbbResponse.json();
-
-    if (!imgData || !imgData.data || !imgData.data.url) {
-      return alert("Image upload failed!");
-    }
-
-    return imgData.data.url; // direct image URL
-  }
-
-// Upload Image to host
-async function uploadMultipleImages(files) {
-  const uploadPromises = files.map(file => uploadImgToHost(file));
-  const urls = await Promise.all(uploadPromises);
-  return urls.join("|||");
-}
-
-// Handle File Box
-document.getElementById("add-imageFile").addEventListener("change", function () {
-  const file = this.files[0];
-  const preview = document.getElementById("imagePreviewContainer");
-
-  if (file) {
-    preview.classList.remove("hidden");
-  }
 });
 
 document.getElementById("edit-imageFile").addEventListener("change", function () {
