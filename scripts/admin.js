@@ -33,6 +33,8 @@ form.addEventListener('submit', async (e) => {
   let selectedImages = [];
 
   const input = document.getElementById("add-imageFile");
+  console.log("Input element:", input);
+
 
   input.addEventListener("change", function () {
     const files = Array.from(this.files);
