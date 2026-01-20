@@ -88,17 +88,13 @@
       <!-- Image Gallery / Carousel -->
       <section class="relative w-full bg-white dark:bg-[#1a2632] mb-1">
         <div
-          class="flex overflow-x-auto snap-x snap-mandatory [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden"
+          id="imageScroller"
+          class="flex overflow-x-auto snap-x snap-mandatory [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          <div
-            id="imageScroller"
-            class="flex overflow-x-auto snap-x snap-mandatory [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            <!-- Images will be injected here -->
-          </div>
+          <!-- Images will be injected here -->
         </div>
         <!-- Pagination Dots -->
-        <!--<div class="flex justify-center gap-2 pb-4 lg:pb-0">
+        <div class="flex justify-center gap-2 pb-4 lg:pb-0">
           <div class="w-2 h-2 rounded-full bg-primary"></div>
           <div
             class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"
@@ -106,7 +102,7 @@
           <div
             class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"
           ></div>
-        </div>-->
+        </div>
       </section>
       <!-- Product Details Header -->
       <div class="lg:col-span-1 space-y-6">
