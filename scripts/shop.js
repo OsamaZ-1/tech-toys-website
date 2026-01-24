@@ -162,9 +162,10 @@ function loadMoreProducts() {
 
 // Infinite Loader Fuction
 let infiniteObserver;
+let loader;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const loader = document.getElementById("infinite-loader");
+  loader = document.getElementById("infinite-loader");
   if (!loader) return;
 
   await initProducts(); // first batch loads
