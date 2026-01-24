@@ -161,28 +161,30 @@ function loadMoreProducts() {
 
 
 // Infinite Loader Fuction
+let infiniteObserver;
+
 document.addEventListener("DOMContentLoaded", async () => {
   const loader = document.getElementById("infinite-loader");
   if (!loader) return;
 
   await initProducts(); // first batch loads
 
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          loadMoreProducts();
-        }
-      });
-    },
-    {
-      root: null,
-      rootMargin: "200px",
-      threshold: 0
-    }
-  );
+  infiniteObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadMoreProducts();
+      }
+    });
+  },
+  {
+    root: null,
+    rootMargin: "200px",
+    threshold: 0
+  }
+);
 
-  observer.observe(loader);
+infiniteObserver.observe(loader);
 });
 
 // ---------------------------------------------------------------------------------------------
@@ -234,8 +236,13 @@ document.getElementById("clearFilters").onclick = () => {
   document.getElementById("filter-gender").value = "";
 
   displayedProducts = allProducts;
-  document.getElementById("product-grid").innerHTML = "";
   lastLoadedIndex = 0;
+  
+  document.getElementById("product-grid").innerHTML = "";
+  
+  infiniteObserver.unobserve(loader);
+  infiniteObserver.observe(loader);
+
   loadMoreProducts();
 
   filterModal.classList.add("hidden");
