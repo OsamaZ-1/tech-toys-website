@@ -239,6 +239,7 @@ document.getElementById("clearFilters").onclick = () => {
 
   displayedProducts = allProducts;
   lastLoadedIndex = 0;
+  isLoading = false;
 
   document.getElementById("product-grid").innerHTML = "";
 
