@@ -46,7 +46,7 @@ async function initProducts() {
 
   applyFiltersFromQuery();
 
-  infiniteObserver.disconnect();
+  infiniteObserver.unobserve(loader);
   infiniteObserver.observe(loader);
 
   // loadMoreProducts(); // first batch
@@ -228,7 +228,7 @@ function applyFilters() {
   document.getElementById("product-grid").innerHTML = "";
   lastLoadedIndex = 0;
 
-  infiniteObserver.disconnect();
+  infiniteObserver.unobserve(loader);
   infiniteObserver.observe(loader);
 
   // loadMoreProducts();
@@ -249,7 +249,7 @@ document.getElementById("clearFilters").onclick = () => {
   
   document.getElementById("product-grid").innerHTML = "";
   
-  infiniteObserver.disconnect();
+  infiniteObserver.unobserve(loader);
   infiniteObserver.observe(loader);
 
   // loadMoreProducts();
@@ -293,7 +293,7 @@ document.querySelectorAll(".sort-option").forEach(btn => {
     document.getElementById("product-grid").innerHTML = "";
     lastLoadedIndex = 0;
 
-    infiniteObserver.disconnect();
+    infiniteObserver.unobserve(loader);
     infiniteObserver.observe(loader);
 
     // loadMoreProducts();
