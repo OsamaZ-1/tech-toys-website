@@ -143,27 +143,32 @@ let isLoading = false;
 function loadMoreProducts() {
   if (isLoading) return;
 
-  isLoading = true;
-
   const nextProducts = displayedProducts.slice(
     lastLoadedIndex,
     lastLoadedIndex + productsPerLoad
   );
 
+  // No more products → hide loader and exit early
   if (nextProducts.length === 0) {
-    // No more products → hide loader
     document.getElementById("infinite-loader").style.display = "none";
     isLoading = false;
     return;
   }
 
-  setTimeout(() => {
-      renderProducts(nextProducts);
-      lastLoadedIndex += nextProducts.length;
-      isLoading = false;
-    }, 500); // 500ms delay to show loading
-}
+  isLoading = true;
+  document.getElementById("infinite-loader").style.display = "flex";
 
+  setTimeout(() => {
+    renderProducts(nextProducts);
+    lastLoadedIndex += nextProducts.length;
+    isLoading = false;
+
+    // Check again if we’ve reached the end after rendering
+    if (lastLoadedIndex >= displayedProducts.length) {
+      document.getElementById("infinite-loader").style.display = "none";
+    }
+  }, 500); // 500ms delay to show loading
+}
 
 // Infinite Loader Fuction
 document.addEventListener("DOMContentLoaded", async () => {
