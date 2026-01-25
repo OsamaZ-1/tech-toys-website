@@ -59,7 +59,7 @@ async function renderProduct() {
 
       applyBgRetry(bgEl, skeleton);
 
-      slider.appendChild(slide);
+      scroller.appendChild(slide);
     });
 
 
