@@ -46,8 +46,7 @@ async function initProducts() {
 
   applyFiltersFromQuery();
 
-  infiniteObserver.unobserve(loader);
-  infiniteObserver.observe(loader);
+  resetInfiniteScroll();
 
   // loadMoreProducts(); // first batch
 }
@@ -228,8 +227,7 @@ function applyFilters() {
   document.getElementById("product-grid").innerHTML = "";
   lastLoadedIndex = 0;
 
-  infiniteObserver.unobserve(loader);
-  infiniteObserver.observe(loader);
+  resetInfiniteScroll();
 
   // loadMoreProducts();
 
@@ -249,8 +247,7 @@ document.getElementById("clearFilters").onclick = () => {
 
   document.getElementById("product-grid").innerHTML = "";
 
-  infiniteObserver.unobserve(loader);
-  infiniteObserver.observe(loader);
+  resetInfiniteScroll();
   
   // loadMoreProducts();
 
@@ -293,14 +290,25 @@ document.querySelectorAll(".sort-option").forEach(btn => {
     document.getElementById("product-grid").innerHTML = "";
     lastLoadedIndex = 0;
 
-    infiniteObserver.unobserve(loader);
-    infiniteObserver.observe(loader);
+    resetInfiniteScroll();
     
     // loadMoreProducts();
 
     sortModal.classList.add("hidden");
   });
 });
+
+function resetInfiniteScroll() {
+  // FORCE intersection reset
+  loader.style.display = "none";
+
+  requestAnimationFrame(() => {
+    loader.style.display = "flex";
+
+    infiniteObserver.unobserve(loader);
+    infiniteObserver.observe(loader);
+  });
+}
 
 function openWhatsApp(message = "") {
   const phoneNumber = "96171146695"; // WhatsApp number (no spaces or symbols)
