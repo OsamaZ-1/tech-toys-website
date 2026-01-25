@@ -33,6 +33,9 @@ let displayedProducts = []; // currently shown products
 let productsPerLoad = 10;
 let lastLoadedIndex = 0;
 
+let infiniteObserver;
+let loader;
+
 async function initProducts() {
   allProducts = await fetchProducts();
   displayedProducts = allProducts;
@@ -43,7 +46,10 @@ async function initProducts() {
 
   applyFiltersFromQuery();
 
-  loadMoreProducts(); // first batch
+  infiniteObserver.disconnect();
+  infiniteObserver.observe(loader);
+
+  // loadMoreProducts(); // first batch
 }
 
 
@@ -161,9 +167,6 @@ function loadMoreProducts() {
 
 
 // Infinite Loader Fuction
-let infiniteObserver;
-let loader;
-
 document.addEventListener("DOMContentLoaded", async () => {
   loader = document.getElementById("infinite-loader");
   if (!loader) return;
@@ -225,7 +228,11 @@ function applyFilters() {
   // Reset and reload
   document.getElementById("product-grid").innerHTML = "";
   lastLoadedIndex = 0;
-  loadMoreProducts();
+
+  infiniteObserver.disconnect();
+  infiniteObserver.observe(loader);
+
+  // loadMoreProducts();
 
   filterModal.classList.add("hidden");
 }
@@ -243,10 +250,10 @@ document.getElementById("clearFilters").onclick = () => {
 
   document.getElementById("product-grid").innerHTML = "";
 
-  infiniteObserver.unobserve(loader);
+  infiniteObserver.disconnect();
   infiniteObserver.observe(loader);
   
-  loadMoreProducts();
+  // loadMoreProducts();
 
   filterModal.classList.add("hidden");
 };
@@ -286,7 +293,11 @@ document.querySelectorAll(".sort-option").forEach(btn => {
     // Reset grid + infinite scroll index
     document.getElementById("product-grid").innerHTML = "";
     lastLoadedIndex = 0;
-    loadMoreProducts();
+
+    infiniteObserver.disconnect();
+    infiniteObserver.observe(loader);
+    
+    // loadMoreProducts();
 
     sortModal.classList.add("hidden");
   });
