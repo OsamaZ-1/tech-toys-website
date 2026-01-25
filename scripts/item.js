@@ -48,7 +48,6 @@ async function renderProduct() {
           <div
             class="absolute inset-0 bg-cover bg-center bg-retry"
             data-src="${url}"
-            data-fallback="${product.image}"
             data-retries="7"
           ></div>
 
