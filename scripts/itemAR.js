@@ -17,6 +17,13 @@ async function fetchProducts() {
 
 let theItem = undefined;
 async function renderProduct() {
+
+    const mainBody = document.getElementById("main-item-body");
+    const pageLoader = document.getElementById("page-loader");
+
+    mainBody.classList.add("hidden");
+    pageLoader.classList.remove("hidden");
+
     const item = await fetchProducts();
     theItem = item;
 
@@ -98,6 +105,9 @@ async function renderProduct() {
         tagEl.style.backgroundColor = "#dcfce7"; // green-100
         tagEl.style.color = "#166534"; // green-800
     }
+
+    mainBody.classList.remove("hidden")
+    pageLoader.classList.add("hidden");
 }
 
 renderProduct();
