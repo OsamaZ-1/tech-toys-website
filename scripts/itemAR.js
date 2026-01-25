@@ -40,15 +40,27 @@ async function renderProduct() {
 
       slide.innerHTML = `
         <div class="relative w-full aspect-square rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800/50">
+          
+          <!-- Loading skeleton -->
+          <div class="absolute inset-0 animate-pulse bg-slate-200 dark:bg-slate-700"></div>
+
+          <!-- Image -->
           <div
-            class="absolute inset-0 bg-cover bg-center"
-            style="background-image: url('${url}')"
-            data-alt="Image not Found."
+            class="absolute inset-0 bg-cover bg-center bg-retry"
+            data-src="${url}"
+            data-fallback="${product.image}"
+            data-retries="7"
           ></div>
+
         </div>
       `;
 
-      scroller.appendChild(slide);
+      const bgEl = slide.querySelector(".bg-retry");
+      const skeleton = slide.querySelector(".animate-pulse");
+
+      applyBgRetry(bgEl, skeleton);
+
+      slider.appendChild(slide);
     });
 
 
@@ -90,6 +102,39 @@ async function renderProduct() {
 }
 
 renderProduct();
+
+function applyBgRetry(el, skeleton) {
+  let retries = parseInt(el.dataset.retries || "7", 10);
+  const primary = el.dataset.src;
+  const fallback = el.dataset.fallback;
+
+  function tryLoad(src) {
+    const img = new Image();
+
+    img.onload = () => {
+      el.style.backgroundImage = `url('${src}')`;
+
+      // hide loading animation
+      if (skeleton) skeleton.style.display = "none";
+    };
+
+    img.onerror = () => {
+      if (retries-- > 0) {
+        setTimeout(() => tryLoad(fallback), 5000);
+      } else {
+        // optional: keep skeleton or show error color
+        if (skeleton) {
+          skeleton.classList.remove("animate-pulse");
+          skeleton.classList.add("bg-red-100", "dark:bg-red-900/30");
+        }
+      }
+    };
+
+    img.src = src;
+  }
+
+  tryLoad(primary);
+}
 
 function minusQty(){
     let qtyDisplay = document.getElementById("item-quantity");
