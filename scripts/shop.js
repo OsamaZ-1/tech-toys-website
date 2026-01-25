@@ -171,8 +171,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   loader = document.getElementById("infinite-loader");
   if (!loader) return;
 
-  await initProducts(); // first batch loads
-
   infiniteObserver = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
@@ -188,8 +186,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 );
 
-infiniteObserver.observe(loader);
+  await initProducts(); // first batch loads
 
+  infiniteObserver.observe(loader);
 });
 
 // ---------------------------------------------------------------------------------------------
