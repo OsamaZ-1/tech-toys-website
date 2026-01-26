@@ -2,7 +2,7 @@
 
 // Cache per URL
 const cache = new Map();
-const CACHE_TTL = 60 * 1000; // 1 minute
+const CACHE_TTL = 1800 * 1000; // 30 minute
 
 export async function handler(event, context) {
   const url = process.env.APPS_SCRIPT_URL;
@@ -22,6 +22,7 @@ export async function handler(event, context) {
   // Forward POST body
   if (event.httpMethod === "POST") {
     options.body = event.body;
+    cache.clear(); // load updated version after POST
   }
 
   // Build fetch URL (with query params)
@@ -52,10 +53,25 @@ export async function handler(event, context) {
 
   try {
     const response = await fetch(fetchUrl, options);
+
+    if (!response.ok) {
+      throw new Error(`Apps Script error: ${response.status}`);
+    }
+
     const data = await response.json();
 
     // 🔹 Store cache per URL
     if (event.httpMethod === "GET") {
+      // safety check
+      if (
+        data == null ||
+        typeof data !== "object" ||
+        Array.isArray(data) && data.length === 0
+      ) {
+        throw new Error("Invalid or empty response from Apps Script");
+      }
+
+      // set cache
       cache.set(fetchUrl, {
         data,
         timestamp: Date.now(),
