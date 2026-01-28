@@ -2,7 +2,7 @@
 
 // Cache per URL
 const cache = new Map();
-const CACHE_TTL = 1800 * 1000; // 30 minute
+const CACHE_TTL = 60 * 1000; // 30 minute
 
 export async function handler(event, context) {
   const url = process.env.APPS_SCRIPT_URL;
