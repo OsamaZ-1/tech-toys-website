@@ -274,3 +274,4 @@ function enableHorizontalDragScroll(containerId) {
 }
 
 enableHorizontalDragScroll("badges");
+enableHorizontalDragScroll("imageScroller");
