@@ -23,7 +23,7 @@ export async function handler(event) {
     const headers = {
       ...corsHeaders(),
       "Content-Type": "application/json",
-      "Cache-Control": event.httpMethod === "GET" ? "public, max-age=60, stale-while-revalidate=300" : "no-store",
+      "Cache-Control": event.httpMethod === "GET" ? "public, max-age=5, stale-while-revalidate=300" : "no-store",
     };
 
     return { statusCode: 200, headers, body: JSON.stringify(data) };
