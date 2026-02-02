@@ -1,14 +1,29 @@
 // 3️⃣ Fetch products
 const WEB_APP_URL = "/.netlify/functions/proxy";
+
 async function fetchProducts() {
   try {
+    // 1️⃣ Always fetch the full dataset (from CDN cache)
+    const response = await fetch(WEB_APP_URL);
+    const allData = await response.json();
+
+    if (!allData || !Array.isArray(allData)) {
+      console.error("Invalid data from proxy");
+      return [];
+    }
+
+    // 2️⃣ Check if URL has itemNo param to filter
     const params = new URLSearchParams(window.location.search);
     const itemNo = params.get("itemNo");
 
-    const response = await fetch(`${WEB_APP_URL}?itemNo=${encodeURIComponent(itemNo)}`);
-    const data = await response.json();
+    if (itemNo) {
+      // Filter locally
+      const filtered = allData.filter(item => String(item.itemNo) === String(itemNo));
+      return filtered.length > 0 ? filtered : [{ error: "Item not found" }];
+    }
 
-    return data;
+    // 3️⃣ Return full dataset
+    return allData;
   } catch (err) {
     console.error("Failed to fetch products:", err);
     return null;
