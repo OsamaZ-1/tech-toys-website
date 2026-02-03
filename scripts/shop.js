@@ -151,12 +151,14 @@ function loadMoreProducts() {
   // No more products → hide loader and exit early
   if (nextProducts.length === 0) {
     document.getElementById("infinite-loader").style.display = "none";
+    document.getElementById("backToTop").classList.toggle("hidden");
     isLoading = false;
     return;
   }
 
   isLoading = true;
   document.getElementById("infinite-loader").style.display = "flex";
+  document.getElementById("backToTop").classList.toggle("hidden");
 
   setTimeout(() => {
     renderProducts(nextProducts);
