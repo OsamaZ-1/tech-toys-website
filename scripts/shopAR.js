@@ -151,6 +151,9 @@ function loadMoreProducts() {
   // No more products → hide loader and exit early
   if (nextProducts.length === 0) {
     document.getElementById("infinite-loader").style.display = "none";
+    const backToTop = document.getElementById("backToTop");
+    backToTop.classList.remove("hidden");
+    backToTop.classList.add("flex");
     isLoading = false;
     return;
   }
@@ -166,6 +169,9 @@ function loadMoreProducts() {
     // Check again if we’ve reached the end after rendering
     if (lastLoadedIndex >= displayedProducts.length) {
       document.getElementById("infinite-loader").style.display = "none";
+      const backToTop = document.getElementById("backToTop");
+      backToTop.classList.remove("hidden");
+      backToTop.classList.add("flex");
     }
   }, 500); // 500ms delay to show loading
 }
