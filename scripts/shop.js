@@ -253,6 +253,7 @@ document.getElementById("clearFilters").onclick = () => {
   document.getElementById("filter-age").value = "";
   document.getElementById("filter-category").value = "";
   document.getElementById("filter-gender").value = "";
+  document.getElementById("filter-search").value = "";
 
   displayedProducts = allProducts;
   lastLoadedIndex = 0;

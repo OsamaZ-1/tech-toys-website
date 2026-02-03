@@ -225,12 +225,14 @@ function applyFilters() {
   const age = document.getElementById("filter-age").value;
   const category = document.getElementById("filter-category").value;
   const gender = document.getElementById("filter-gender").value;
+  const search = document.getElementById("filter-search").value.trim().toLowerCase();
 
   displayedProducts = allProducts.filter(p => {
     if (maxPrice && parseFloat(p.price) > maxPrice) return false;
     if (age && p.age !== age) return false;
     if (category && p.category !== category) return false;
     if (gender && p.gender !== gender) return false;
+    if (search && !p.name.toLowerCase().includes(search)) return false;
     return true;
   });
 
@@ -251,6 +253,7 @@ document.getElementById("clearFilters").onclick = () => {
   document.getElementById("filter-age").value = "";
   document.getElementById("filter-category").value = "";
   document.getElementById("filter-gender").value = "";
+  document.getElementById("filter-search").value = "";
 
   displayedProducts = allProducts;
   lastLoadedIndex = 0;
