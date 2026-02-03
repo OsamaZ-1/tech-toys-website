@@ -408,3 +408,32 @@ function applyFiltersFromQuery() {
   // Apply the filtering logic
   applyFilters();
 }
+
+// Age Filter Slider
+const slider1 = document.getElementById('slider1');
+const slider2 = document.getElementById('slider2');
+const val1Display = document.getElementById('val1Display');
+const val2Display = document.getElementById('val2Display');
+
+function updateSliderValues() {
+  const sliderWidth = slider1.offsetWidth;
+  
+  // Prevent overlapping
+  if (parseInt(slider1.value) > parseInt(slider2.value)) slider1.value = slider2.value;
+  if (parseInt(slider2.value) < parseInt(slider1.value)) slider2.value = slider1.value;
+
+  // Update text
+  val1Display.textContent = slider1.value;
+  val2Display.textContent = slider2.value;
+
+  // Position text under thumb
+  val1Display.style.left = `calc(${(slider1.value / 100) * sliderWidth}px - 12px)`;
+  val2Display.style.left = `calc(${(slider2.value / 100) * sliderWidth}px - 12px)`;
+}
+
+// Initialize positions
+updateSliderValues();
+
+// Event listeners
+slider1.addEventListener('input', updateSliderValues);
+slider2.addEventListener('input', updateSliderValues);
