@@ -169,23 +169,25 @@
         <!-- Product Cards are placed here -->
       </div>
 
+      <div id="end-of-list" class="flex justify-center">
+        <button
+          id="backToTop"
+          class="hidden mx-auto mt-8 mb-4 flex items-center gap-2 bg-primary text-slate-900 rounded-full px-5 py-2.5 shadow-md shadow-primary/30 active:scale-95 transition-all"
+          aria-label="Back to top"
+        >
+          <span class="material-symbols-outlined text-[16px] leading-none">
+            expand_less
+          </span>
+          <span class="font-bold text-sm">Back to top</span>
+        </button>
+      </div>
+
       <!-- Infinite Scroll Loader -->
       <div id="infinite-loader" class="flex justify-center py-8">
         <div
           class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
         ></div>
       </div>
-
-      <button
-        id="backToTop"
-        class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 bg-primary text-slate-900 rounded-full px-5 py-2.5 shadow-md shadow-primary/30 active:scale-95 transition-all"
-        aria-label="Back to top"
-      >
-        <span class="material-symbols-outlined text-[16px] leading-none">
-          expand_less
-        </span>
-        <span class="font-bold text-sm">Top</span>
-      </button>
 
       <footer class="text-slate-400 text-center py-4">
         <p class="text-sm">
