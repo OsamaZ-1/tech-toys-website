@@ -160,7 +160,6 @@ function loadMoreProducts() {
 
   isLoading = true;
   document.getElementById("infinite-loader").style.display = "flex";
-  document.getElementById("backToTop").classList.toggle("hidden");
 
   setTimeout(() => {
     renderProducts(nextProducts);
@@ -170,6 +169,9 @@ function loadMoreProducts() {
     // Check again if we’ve reached the end after rendering
     if (lastLoadedIndex >= displayedProducts.length) {
       document.getElementById("infinite-loader").style.display = "none";
+      const backToTop = document.getElementById("backToTop");
+      backToTop.classList.remove("hidden");
+      backToTop.classList.add("flex");
     }
   }, 500); // 500ms delay to show loading
 }
