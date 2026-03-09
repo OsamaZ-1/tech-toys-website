@@ -88,6 +88,8 @@ async function uploadImgToHost(file) {
   formData.append("signature", auth.signature);
   formData.append("publicKey", auth.publicKey);
 
+  console.log(formData);
+
   // Optional: set a folder for uploaded files
   formData.append("folder", "/products"); 
   formData.append("useUniqueFileName", "true"); // automatically prevent overwrites
