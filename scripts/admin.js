@@ -56,26 +56,57 @@ function renderPreview(file, index) {
 }
 
 
-async function uploadImgToHost(file){
-    const formData = new FormData();
-    formData.append("image", file); // key is 'image'
-    formData.append("key", "9d3fdcc4c4819328a472cde28eec0134"); // your API key
+// async function uploadImgToHost(file){
+//     const formData = new FormData();
+//     formData.append("image", file); // key is 'image'
+//     formData.append("key", "9d3fdcc4c4819328a472cde28eec0134"); // your API key
 
-    const imgbbResponse = await fetch("https://api.imgbb.com/1/upload", {
-      method: "POST",
-      body: formData
-    });
+//     const imgbbResponse = await fetch("https://api.imgbb.com/1/upload", {
+//       method: "POST",
+//       body: formData
+//     });
 
-    const imgData = await imgbbResponse.json();
+//     const imgData = await imgbbResponse.json();
 
-    if (!imgData || !imgData.data || !imgData.data.url) {
-      return alert("Image upload failed!");
-    }
+//     if (!imgData || !imgData.data || !imgData.data.url) {
+//       return alert("Image upload failed!");
+//     }
 
-    return imgData.data.url; // direct image URL
+//     return imgData.data.url; // direct image URL
+//   }
+
+// Upload a single image to ImageKit
+async function uploadImgToHost(file) {
+  // 1. Get ImageKit auth params from Netlify function
+  const auth = await fetch("/.netlify/functions/imagekit-auth").then(res => res.json());
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("fileName", file.name);
+  formData.append("token", auth.token);
+  formData.append("expire", auth.expire);
+  formData.append("signature", auth.signature);
+  formData.append("publicKey", auth.publicKey);
+
+  // Optional: set a folder for uploaded files
+  formData.append("folder", "/products"); 
+  formData.append("useUniqueFileName", "true"); // automatically prevent overwrites
+
+  const response = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await response.json();
+
+  if (!data || !data.url) {
+    return alert("Image upload failed!");
   }
 
-// Upload Image to host
+  return data.url;
+}
+
+// Upload multiple images and join URLs
 async function uploadMultipleImages(files) {
   const uploadPromises = files.map(file => uploadImgToHost(file));
   const urls = await Promise.all(uploadPromises);
