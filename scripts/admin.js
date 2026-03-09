@@ -77,22 +77,19 @@ function renderPreview(file, index) {
 
 // Upload a single image to ImageKit
 async function uploadImgToHost(file) {
-  // 1. Get ImageKit auth params from Netlify function
+  // Get auth parameters from Netlify
   const auth = await fetch("/.netlify/functions/imagekit-auth").then(res => res.json());
+  console.log(auth);
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("fileName", file.name);
+  formData.append("fileName", file.name.replace(/\s/g, "_")); // sanitize name
   formData.append("token", auth.token);
   formData.append("expire", auth.expire);
   formData.append("signature", auth.signature);
   formData.append("publicKey", auth.publicKey);
-
-  console.log(formData);
-
-  // Optional: set a folder for uploaded files
-  formData.append("folder", "/products"); 
-  formData.append("useUniqueFileName", "true"); // automatically prevent overwrites
+  formData.append("folder", "/products"); // optional
+  formData.append("useUniqueFileName", "true"); // string, not boolean
 
   const response = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
     method: "POST",
@@ -100,8 +97,10 @@ async function uploadImgToHost(file) {
   });
 
   const data = await response.json();
+  console.log(data);
 
   if (!data || !data.url) {
+    console.error("Upload failed:", data);
     return alert("Image upload failed!");
   }
 
