@@ -77,41 +77,42 @@ function renderPreview(file, index) {
 
 // Upload a single image to ImageKit
 async function uploadImgToHost(file) {
-  // Get auth parameters from Netlify
+  // 1. Get auth parameters from Netlify backend
   const auth = await fetch("/.netlify/functions/imagekit-auth").then(res => res.json());
-  console.log(auth);
+  console.log("ImageKit auth:", auth);
 
+  // 2. Build FormData for upload
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append("file", file);                           // file object
   formData.append("fileName", file.name.replace(/\s/g, "_")); // sanitize name
   formData.append("token", auth.token);
-  formData.append("expire", auth.expire);
-  formData.append("signature", auth.signature);
+  formData.append("expire", auth.expire);                  // must be string from backend
+  formData.append("signature", auth.signature);            // exact string from backend
   formData.append("publicKey", auth.publicKey);
-  formData.append("folder", "/products"); // optional
-  formData.append("useUniqueFileName", "true"); // string, not boolean
+  formData.append("folder", "/products");                  // optional folder
+  formData.append("useUniqueFileName", "true");            // string
 
+  // 3. Upload to ImageKit
   const response = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
     method: "POST",
     body: formData
   });
 
   const data = await response.json();
-  console.log(data);
 
   if (!data || !data.url) {
     console.error("Upload failed:", data);
     return alert("Image upload failed!");
   }
 
-  return data.url;
+  return data.url; // return direct ImageKit URL
 }
 
 // Upload multiple images and join URLs
 async function uploadMultipleImages(files) {
   const uploadPromises = files.map(file => uploadImgToHost(file));
   const urls = await Promise.all(uploadPromises);
-  return urls.join("|||");
+  return urls.join("|||"); // same as your old ImgBB workflow
 }
 
 form.addEventListener('submit', async (e) => {
