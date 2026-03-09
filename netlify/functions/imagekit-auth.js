@@ -15,11 +15,10 @@ export async function handler(event) {
     const token = Math.random().toString(36).substring(2);        // random string
     const expire = (Math.floor(Date.now() / 1000) + 600).toString(); // expires in 10 min, string
 
-    // 2. Generate SHA1 signature = privateKey + token + expire
-    const signature = crypto
-      .createHash("sha1")
-      .update(privateKey + token + expire)
-      .digest("hex");
+    // HMAC-SHA1 of "token + expire" using privateKey
+    const hmac = crypto.createHmac("sha1", process.env.ImageKit_Key);
+    hmac.update(token + expire);
+    const signature = hmac.digest("hex");
 
     // 3. Return auth parameters to frontend
     return {
