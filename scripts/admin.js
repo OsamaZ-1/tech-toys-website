@@ -79,7 +79,6 @@ function renderPreview(file, index) {
 async function uploadImgToHost(file) {
   // 1. Get auth parameters from Netlify backend
   const auth = await fetch("/.netlify/functions/imagekit-auth").then(res => res.json());
-  console.log("ImageKit auth:", auth);
 
   // 2. Build FormData for upload
   const formData = new FormData();
@@ -108,11 +107,17 @@ async function uploadImgToHost(file) {
   return data.url; // return direct ImageKit URL
 }
 
-// Upload multiple images and join URLs
+// Upload multiple images and join URLs with WebP
 async function uploadMultipleImages(files) {
-  const uploadPromises = files.map(file => uploadImgToHost(file));
+  const uploadPromises = files.map(async file => {
+    const url = await uploadImgToHost(file);
+    // Append ImageKit WebP transformation
+    const webpUrl = url + "?tr=f-webp"; // or "?tr=auto-format" for automatic browser optimization
+    return webpUrl;
+  });
+
   const urls = await Promise.all(uploadPromises);
-  return urls.join("|||"); // same as your old ImgBB workflow
+  return urls.join("|||"); // same as before, but now WebP
 }
 
 form.addEventListener('submit', async (e) => {
